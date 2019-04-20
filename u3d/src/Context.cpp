@@ -18,10 +18,21 @@ namespace u3d
 
         context = SDL_GL_CreateContext(window);
 
-
         SDL_GL_SetSwapInterval(1);
 
         glClearColor(0.2, 0.2, 0.2, 1.0);
+
+        GLenum err = glewInit();
+        if (err != GLEW_OK)
+        {
+            printf("bad glew\n");
+            return;
+        }
+        if (!GLEW_VERSION_2_1)
+        {
+            printf("bad version\n");
+            return;
+        }
     }
 
     void Context::clear()

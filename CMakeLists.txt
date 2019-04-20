@@ -23,5 +23,7 @@ set(
 )
 set(LIB SDL2 SDL2_image GL GLEW)
 
+set(COMPILE_OPTS -g -std=c++11)
+
 add_subdirectory(./u3d)
 add_subdirectory(./example)

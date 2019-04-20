@@ -9,10 +9,8 @@ namespace u3d
     {
     public:
         void compile(const std::string&, const std::string&);
-    
+        uint32_t getId();
     private:
-        uint32_t vsid;
-        uint32_t fsid;
         uint32_t pid;
     };
 } // u3d
