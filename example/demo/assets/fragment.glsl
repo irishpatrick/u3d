@@ -23,4 +23,5 @@ void main() {
     vec4 final = vec4(ambient + diffuse, 1) * tex;
     
     outputColor = final;
+    outputColor = vec4(1,1,1,1);
 }

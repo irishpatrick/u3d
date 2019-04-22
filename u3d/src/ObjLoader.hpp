@@ -7,6 +7,7 @@ namespace u3d
 {
     class ObjLoader
     {
+    public:
         static Mesh load(const std::string&);
     };
 }

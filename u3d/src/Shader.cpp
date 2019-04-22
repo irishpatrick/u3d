@@ -74,5 +74,7 @@ namespace u3d
 
         glDeleteShader(vsid);
         glDeleteShader(fsid);
+
+        glBindFragDataLocation(pid, 0, std::string("outputcolor").c_str());
     }
 } // u3d

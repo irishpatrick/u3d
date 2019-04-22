@@ -109,7 +109,7 @@ namespace u3d
                 parts = split(line, ' ');
                 for (auto& e : parts)
                 {
-                    vt.push_back(atof(e.c_str()));
+                    n.push_back(atof(e.c_str()));
                 }
             }
             else if (startswith(line, "f "))
@@ -123,6 +123,8 @@ namespace u3d
         }
 
         Mesh out;
+
+        out.faces = f.size();
 
         int dest = 0;
         for (auto& e : f)
@@ -152,6 +154,8 @@ namespace u3d
                 dest = 0;
             }
         }
+
+        printf("faces: %d, v: %d, vt: %d, n: %d\n", f.size(), v.size(), vt.size(), n.size());
         
         return out;
     }

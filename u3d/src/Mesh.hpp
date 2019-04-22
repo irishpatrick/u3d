@@ -12,6 +12,8 @@ namespace u3d
         ~Mesh() {}
 
         void create(int);
+        void update();
+        void draw();
 
         glm::vec3 position;
         glm::vec3 rotation;
@@ -24,6 +26,8 @@ namespace u3d
         int32_t faces;
         std::vector<float> buffer;
         glm::mat4 matrix;
+        uint32_t pid;
+        uint32_t uniform;
     private:
     };
 } // u3d

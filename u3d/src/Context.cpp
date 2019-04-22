@@ -20,7 +20,9 @@ namespace u3d
 
         SDL_GL_SetSwapInterval(1);
 
-        glClearColor(0.2, 0.2, 0.2, 1.0);
+        glClearColor(0.2, 0.5, 0.5, 1.0);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LESS);
 
         GLenum err = glewInit();
         if (err != GLEW_OK)
