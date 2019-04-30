@@ -4,57 +4,58 @@
 #include <glm/glm.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/transform.hpp>
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
+
 namespace u3d
 {
-    void Mesh::create(int program)
+    // process faces
+    void Mesh::load(const aiMesh *mesh)
     {
-        pid = program;
-        glGenVertexArrays(1, &vao);
-        glBindVertexArray(vao);
+        uint32_t i, j;
+        uint32_t tmp[3];
+        for (i = 0; i < mesh->mNumFaces; ++i)
+        {
+            const aiFace *cur_face = &mesh->mFaces[i];
+            memcpy(&tmp, cur_face, sizeof(uint32_t));
+            for (j = 0; j < 3; ++j)
+            {
+                m_faces.push_back(tmp[i]);
+            }
+        }
+        glGenBuffers(1, &ibo);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * mesh->mNumFaces * 3, &m_faces[0], GL_STATIC_DRAW);
 
-        glGenBuffers(1, &vbo);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, buffer.size()*4, &buffer[0], GL_STATIC_DRAW);
+        // vertices
+        if (mesh->HasPositions())
+        {
+            glGenBuffers(1, &vbo);
+            glBindBuffer(GL_ARRAY_BUFFER, vbo);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * mesh->mNumVertices, mesh->mVertices, GL_STATIC_DRAW);
+        }
 
-        vattrib = glGetAttribLocation(program, "vert");
-        glEnableVertexAttribArray(vattrib);
-        glVertexAttribPointer(vattrib, 3, GL_FLOAT, false, 8*4, (void*)(0));
+        if (mesh->HasNormals())
+        {
+            glGenBuffers(1, &nbo);
+            glBindBuffer(GL_ARRAY_BUFFER, nbo);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * mesh->mNumVertices, mesh->mNormals, GL_STATIC_DRAW);
+        }
 
-        tattrib = glGetAttribLocation(program, "tex");
-        glEnableVertexAttribArray(tattrib);
-        glVertexAttribPointer(tattrib, 2, GL_FLOAT, false, 8*4, (void*)(3*4));
-
-        nattrib = glGetAttribLocation(program, "norm");
-        glEnableVertexAttribArray(nattrib);
-        glVertexAttribPointer(nattrib, 3, GL_FLOAT, false, 8*4, (void*)(5*4));
-
-        uniform = glGetUniformLocation(pid, std::string("model").c_str());
+        if (mesh->HasTextureCoords(0))
+        {
+            glGenBuffers(1, &tbo);
+            glBindBuffer(GL_ARRAY_BUFFER, tbo);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * mesh->mNumVertices, mesh->mTextureCoords, GL_STATIC_DRAW);
+        }
     }
 
-    void Mesh::update()
+    void Mesh::setProgram(uint32_t id)
     {
-        glm::vec3 ihat = glm::vec3(1, 0, 0);
-        glm::vec3 jhat = glm::vec3(0, 1, 0);
-        glm::vec3 khat = glm::vec3(0, 0, 1);
-        matrix = glm::mat4(1.0f);
-        glm::mat4 t = glm::translate(position);
-        glm::mat4 rx = glm::rotate(rotation.x, ihat);
-        glm::mat4 ry = glm::rotate(rotation.y, jhat);
-        glm::mat4 rz = glm::rotate(rotation.z, khat);
-        glm::mat4 s = glm::scale(scale);
-
-        matrix = t * rx * ry * rz * s;
         
     }
 
-    void Mesh::draw()
-    {
-        glUseProgram(pid);
-        glUniformMatrix4fv(uniform, 1, false, (float*)&matrix[0]);
+    // normals
 
-        glBindVertexArray(vao);
-        //glActiveTexture(GL_TEXTURE0);
-        //glBindTexture(GL_TEXTURE_2D, texture);
-        glDrawArrays(GL_TRIANGLES, 0, faces * 2 * 4);
-    }
+    // textures
 } // u3d

@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <glm/glm.hpp>
+#include <string>
+#include <assimp/mesh.h>
 
 namespace u3d
 {
@@ -11,23 +13,11 @@ namespace u3d
         Mesh() {}
         ~Mesh() {}
 
-        void create(int);
-        void update();
-        void draw();
-
-        glm::vec3 position;
-        glm::vec3 rotation;
-        glm::vec3 scale;
-        uint32_t vbo;
-        uint32_t vao;
-        uint32_t vattrib;
-        uint32_t tattrib;
-        uint32_t nattrib;
-        int32_t faces;
-        std::vector<float> buffer;
-        glm::mat4 matrix;
-        uint32_t pid;
-        uint32_t uniform;
+        void load(const aiMesh *);
+        void setProgram(uint32_t);
     private:
+        std::vector<uint32_t> m_faces;
+        std::vector<uint32_t> m_texcoords;
+        uint32_t vbo, nbo, tbo, ibo;
     };
 } // u3d
