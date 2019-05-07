@@ -19,5 +19,7 @@ namespace u3d
         std::vector<uint32_t> m_faces;
         std::vector<uint32_t> m_texcoords;
         uint32_t vbo, nbo, tbo, ibo;
+        uint32_t vattrib, nattrib, tattrib;
+        uint32_t program;
     };
 } // u3d

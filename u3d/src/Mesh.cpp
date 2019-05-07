@@ -44,15 +44,33 @@ namespace u3d
 
         if (mesh->HasTextureCoords(0))
         {
+            uint32_t i;
+            for (i = 0; i < mesh->mNumVertices; ++i)
+            {
+                m_texcoords[i*2] = mesh->mTextureCoords[0][i].x;
+                m_texcoords[i*2+1] = mesh->mTextureCoords[0][i].y;
+            }
             glGenBuffers(1, &tbo);
             glBindBuffer(GL_ARRAY_BUFFER, tbo);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * mesh->mNumVertices, mesh->mTextureCoords, GL_STATIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * mesh->mNumVertices, &m_texcoords[0], GL_STATIC_DRAW);
         }
     }
 
     void Mesh::setProgram(uint32_t id)
     {
+        program = id;
         
+        vattrib = glGetAttribLocation(id, "vertex");
+        glEnableVertexAttribArray(vattrib);
+        glVertexAttribPointer(vattrib, 3, GL_FLOAT, 0, 0, 0);
+
+        nattrib = glGetAttribLocation(id, "normal");
+        glEnableVertexAttribArray(nattrib);
+        glVertexAttribPointer(nattrib, 3, GL_FLOAT, 0, 0, 0);
+
+        tattrib = glGetAttribLocation(id, "texture");
+        glEnableVertexAttribArray(tattrib);
+        glVertexAttribPointer(id, 2, GL_FLOAT, 0 ,0 ,0);
     }
 
     // normals
