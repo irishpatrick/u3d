@@ -1,7 +1,7 @@
 #pragma once
 
-
 #include <glm/glm.hpp>
+#include <vector>
 
 class Object3D
 {
@@ -12,10 +12,13 @@ public:
 	void update();
 	glm::mat4 getMatrix();
 
+	void addChild(Object3D&);
+
 	glm::vec3 position;
 	glm::vec3 rotation;
 	glm::vec3 scale;
 
 protected:
 	glm::mat4 matrix;
+	std::vector<Object3D*> children;
 };

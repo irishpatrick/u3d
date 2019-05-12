@@ -36,6 +36,8 @@ void Context::init()
 	}
 
 	glfwMakeContextCurrent(window);
+	//glfwSwapInterval(0);
+
 	glewExperimental = true;
 	if (glewInit() != GLEW_OK)
 	{

@@ -31,3 +31,8 @@ glm::mat4 Object3D::getMatrix()
 {
 	return matrix;
 }
+
+void Object3D::addChild(Object3D& obj)
+{
+	children.push_back(&obj);
+}

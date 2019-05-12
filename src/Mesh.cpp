@@ -1,6 +1,7 @@
 #include "Mesh.hpp"
 #include <cstdio>
 #include <cstdlib>
+//#include <boost/lexical_cast.hpp>
 
 Mesh::Mesh() : Object3D()
 {
@@ -64,4 +65,9 @@ void Mesh::draw()
 	);
 	glDrawArrays(GL_TRIANGLES, 0, triangles * 3);
 	glDisableVertexAttribArray(0);
+
+	for (auto& e : children)
+	{
+		
+	}
 }
