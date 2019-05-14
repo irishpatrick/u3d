@@ -59,6 +59,8 @@ void Mesh::generate()
 void Mesh::draw()
 {
 	//printf("base class\n");
+	glBindVertexArray(vao);
+
 	if (vertices.size() > 0)
 	{
 		printf("V");
@@ -104,6 +106,8 @@ void Mesh::draw()
 	}
 
 	printf("\n");
+
+	glBindVertexArray(0);
 
 	/*for (auto& e : children)
 	{

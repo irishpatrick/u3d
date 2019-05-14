@@ -16,12 +16,15 @@ endif (MSVC)
 
 set(CMAKE_MSVCIDE_RUN_PATH "D:\\vcpkg\\installed\\x86-windows\\bin")
 
+find_package(SOIL CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_library(ASSIMP_LIB ${ASSIMP_NAME} REQUIRED)
 find_library(GL_LIB ${GL_NAME} REQUIRED)
 find_library(DEVIL_LIB ${DEVIL_NAME} REQUIRED)
+find_package(SDL2 CONFIG REQUIRED)
+find_package(sdl2-image CONFIG REQUIRED)
 
 #if (UNIX)
 find_library(TIFF_LIB tiff REQUIRED)
@@ -37,6 +40,7 @@ set(LIB
 	GLEW::GLEW 
 	glm
 	glfw
+	SOIL
 	${ASSIMP_LIB}
 	${GL_LIB}
 	${DEVIL_LIB}
@@ -59,6 +63,10 @@ set(LIB
 	${ASSIMP_LIB}
 	${GL_LIB}
 	${DEVIL_LIB}
+	SOIL
+	SDL2::SDL2
+	SDL2::SDL2main
+	SDL2::SDL2_image
 )
 
 #endif (UNIX)
