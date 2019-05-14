@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glm/glm.hpp>
+#include "gl_includes.hpp"
 #include <vector>
 
 class Object3D

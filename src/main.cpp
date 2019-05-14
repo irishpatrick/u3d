@@ -1,16 +1,13 @@
 #include <cstdio>
-#include <gl/glew.h>
-#include <glfw/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
-#include <glm/gtx/string_cast.hpp>
+#include "gl_includes.hpp"
+#include <cmath>
 #include "Mesh.hpp"
 #include "Context.hpp"
 #include "Triangle.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
 #include "Cube.hpp"
-#include <cmath>
+#include "Texture.hpp"
 
 int running = 1;
 Context ctx;
@@ -21,6 +18,8 @@ Camera camera;
 GLuint model_loc;
 GLuint view_loc;
 GLuint projection_loc;
+GLuint has_tex_loc;
+Texture crate;
 
 
 void init()
@@ -30,6 +29,8 @@ void init()
 	test.generate();
 	cube.init();
 	cube.generate();
+
+	//crate.load("assets/crate_diffuse.tif");
 
 	//cube.position.x = 2;
 	//cube.position.z = -4;
@@ -46,6 +47,7 @@ void init()
 	view_loc = shader.getUniform("view");
 	projection_loc = shader.getUniform("projection");
 	model_loc = shader.getUniform("model");
+	has_tex_loc = shader.getUniform("has_texture");
 }
 
 void update()
@@ -74,18 +76,22 @@ void update()
 
 void draw()
 {
+	printf("triangle: ");
 	shader.attach();
 	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
 	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
 	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &test.getMatrix()[0][0]);
+	glUniform1i(has_tex_loc, 0);
 	//printf("SANITY CHECK\n%s\n%s\n%s\n", glm::to_string(camera.getProjectionMatrix()).c_str(), glm::to_string(camera.getMatrix()).c_str(), glm::to_string(test.getMatrix()).c_str());
 	test.draw();
 	shader.detach();
 
+	printf("cube: ");
 	shader.attach();
 	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
 	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
 	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &cube.getMatrix()[0][0]);
+	glUniform1i(has_tex_loc, 1);
 	//printf("SANITY CHECK\n%s\n%s\n%s\n", glm::to_string(camera.getProjectionMatrix()).c_str(), glm::to_string(camera.getMatrix()).c_str(), glm::to_string(test.getMatrix()).c_str());
 	cube.draw();
 	shader.detach();

@@ -60,7 +60,6 @@ void Context::clear()
 void Context::draw()
 {
 	glfwSwapBuffers(window);
-	
 }
 
 void Context::poll()

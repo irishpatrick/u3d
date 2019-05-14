@@ -1,6 +1,7 @@
 #include "Texture.hpp"
 #include <IL/il.h>
 #include <cstdint>
+#include <cstdio>
 
 Texture::Texture()
 {
@@ -14,6 +15,7 @@ Texture::~Texture()
 
 void Texture::load(const std::string& fn)
 {
+	printf("load texture %s\n", fn.c_str());
 	ILuint il_id;
 	ilGenImages(1, &il_id);
 	ilBindImage(il_id);

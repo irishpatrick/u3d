@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gl/glew.h>
+#include "gl_includes.hpp"
 #include <vector>
 #include "Object3D.hpp"
 #include <cstdint>
@@ -17,8 +17,8 @@ public:
 
 protected:
 	GLuint vbo;
-	GLuint vno;
-	GLuint vto;
+	GLuint tbo;
+	GLuint nbo;
 	GLuint ibo;
 	GLuint vao;
 	std::vector<GLfloat> vertices;

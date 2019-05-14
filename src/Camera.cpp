@@ -5,7 +5,7 @@
 
 Camera::Camera() : Object3D()
 {
-
+	projection = glm::mat4(1.0f);
 }
 
 Camera::~Camera()

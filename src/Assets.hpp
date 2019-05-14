@@ -2,6 +2,7 @@
 
 #include <string>
 #include "Mesh.hpp"
+#include "Scene.hpp"
 
 #include <assimp/Importer.hpp>
 
