@@ -75,7 +75,6 @@ void update()
 
 void draw()
 {
-	printf("triangle: ");
 	shader.attach();
 	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
 	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
@@ -85,7 +84,6 @@ void draw()
 	test.draw();
 	shader.detach();
 
-	printf("cube: ");
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, crate.getId());
 	shader.attach();

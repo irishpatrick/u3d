@@ -25,13 +25,11 @@ void Mesh::init()
 
 void Mesh::generate()
 {
-	printf("generate mesh: ");
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
 	if (vertices.size() > 0)
 	{
-		printf("V");
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), &vertices[0], GL_STATIC_DRAW);
@@ -39,7 +37,6 @@ void Mesh::generate()
 	
 	if (texcoords.size() > 0)
 	{
-		printf("T");
 		glGenBuffers(1, &tbo);
 		glBindBuffer(GL_ARRAY_BUFFER, tbo);
 		glBufferData(GL_ARRAY_BUFFER, texcoords.size() * sizeof(GLfloat), &texcoords[0], GL_STATIC_DRAW);
@@ -47,23 +44,18 @@ void Mesh::generate()
 	
 	if (normals.size() > 0)
 	{
-		printf("N");
 		glGenBuffers(1, &nbo);
 		glBindBuffer(GL_ARRAY_BUFFER, nbo);
 		glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(GLfloat), &normals[0], GL_STATIC_DRAW);
 	}
-
-	printf("\n");
 }
 
 void Mesh::draw()
 {
-	//printf("base class\n");
 	glBindVertexArray(vao);
 
 	if (vertices.size() > 0)
 	{
-		printf("V");
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glVertexAttribPointer(
@@ -78,7 +70,6 @@ void Mesh::draw()
 
 	if (texcoords.size() > 0)
 	{
-		printf("T");
 		glEnableVertexAttribArray(1);
 		glBindBuffer(GL_ARRAY_BUFFER, tbo);
 		glVertexAttribPointer(
@@ -95,17 +86,13 @@ void Mesh::draw()
 
 	if (vertices.size() > 0)
 	{
-		printf("v");
 		glDisableVertexAttribArray(0);
 	}
 
 	if (texcoords.size() > 0)
 	{
-		printf("t");
 		glDisableVertexAttribArray(1);
 	}
-
-	printf("\n");
 
 	glBindVertexArray(0);
 

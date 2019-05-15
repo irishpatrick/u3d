@@ -1,6 +1,4 @@
 #include "Texture.hpp"
-#include <IL/il.h>
-#include <SOIL/SOIL.h>
 #include <cstdint>
 #include <cstdio>
 #include <SDL2/SDL.h>
