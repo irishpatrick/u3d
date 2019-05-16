@@ -8,6 +8,7 @@
 #include "Camera.hpp"
 #include "Cube.hpp"
 #include "Texture.hpp"
+#include "Util.hpp"
 
 int running = 1;
 Context ctx;
@@ -49,7 +50,7 @@ void init()
 	has_tex_loc = shader.getUniform("has_texture");
 }
 
-void update()
+void update(float delta)
 {
 	int esc = glfwGetKey(ctx.window, GLFW_KEY_ESCAPE) == GLFW_PRESS;
 	if (esc)
@@ -63,10 +64,10 @@ void update()
 
 	cube.position.x = 3 * sin(2 * cube.rotation.y);
 	cube.position.y = 3 * cos(2 * cube.rotation.y);
-	cube.rotation.y += 0.01f;
-	cube.rotation.x += 0.01f;
+	cube.rotation.y += 0.5f * delta;
+	cube.rotation.x += 0.5f * delta;
 
-	test.rotation.y += 0.01f;
+	test.rotation.y += 0.5f * delta;
 
 	camera.update();
 	test.update();
@@ -103,15 +104,22 @@ int main(int argc, char* argv[])
 
 	init();
 
+	unsigned int now, then;
+	then = Util::currentTimeMillis();
+
 	while (running)
 	{
-		update();
+		now = Util::currentTimeMillis();
+		float delta = (float)(now - then);
+		update(delta/1000.0f);
 		
 		ctx.clear();
-		
+	
 		draw();
 
 		ctx.draw();
 		ctx.poll();
+
+		then = now;
 	}
 }
