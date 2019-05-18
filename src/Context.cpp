@@ -27,7 +27,7 @@ void Context::init()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // We don't want the old OpenGL 
 
-	window = glfwCreateWindow(1024, 768, "title", NULL, NULL);
+	window = glfwCreateWindow(1920, 1080, "title", NULL, NULL);
 	if (window == NULL)
 	{
 		fprintf(stderr, "window error\n");

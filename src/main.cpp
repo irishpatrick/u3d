@@ -40,7 +40,7 @@ void init()
 	tm.generate();
 
 	printf("v=%d t=%d i=%d\n", loaded.vertices.size(), loaded.texcoords.size(), loaded.indices.size());
-	loaded = Assets::loadMesh("assets/cube.dae");
+	loaded = Assets::loadMesh("assets/cube.obj");
 	printf("v=%d t=%d i=%d\n", loaded.vertices.size(), loaded.texcoords.size(), loaded.indices.size());
 	
 	printf("sanity check\n");
