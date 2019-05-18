@@ -9,6 +9,8 @@
 #include "Cube.hpp"
 #include "Texture.hpp"
 #include "Util.hpp"
+#include "Assets.hpp"
+#include "TestMesh.hpp"
 
 int running = 1;
 Context ctx;
@@ -21,14 +23,41 @@ GLuint view_loc;
 GLuint projection_loc;
 GLuint has_tex_loc;
 Texture crate;
+Mesh loaded;
+TestMesh tm;
 
 void init()
 {
 	ctx.init();
+
 	test.init();
 	test.generate();
+	
 	cube.init();
 	cube.generate();
+
+	tm.init();
+	tm.generate();
+
+	printf("v=%d t=%d i=%d\n", loaded.vertices.size(), loaded.texcoords.size(), loaded.indices.size());
+	loaded = Assets::loadMesh("assets/cube.dae");
+	printf("v=%d t=%d i=%d\n", loaded.vertices.size(), loaded.texcoords.size(), loaded.indices.size());
+	
+	printf("sanity check\n");
+	for (auto& e : loaded.vertices)
+	{
+		printf("%f ", e);
+	}
+	printf("\n");
+	for (auto& e : loaded.indices)
+	{
+		printf("%u ", e);
+	}
+	printf("\n");
+	loaded.generate();
+	//loaded.position.z = -1;
+	//loaded.position.x = -1;
+
 
 	crate.load("assets/crate_diffuse.png");
 
@@ -69,9 +98,13 @@ void update(float delta)
 
 	test.rotation.y += 0.5f * delta;
 
+	loaded.rotation.x += 0.5f * delta;
+
 	camera.update();
 	test.update();
 	cube.update();
+	loaded.update();
+	tm.update();
 }
 
 void draw()
@@ -84,6 +117,26 @@ void draw()
 	//printf("SANITY CHECK\n%s\n%s\n%s\n", glm::to_string(camera.getProjectionMatrix()).c_str(), glm::to_string(camera.getMatrix()).c_str(), glm::to_string(test.getMatrix()).c_str());
 	test.draw();
 	shader.detach();
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, crate.getId());
+	shader.attach();
+	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
+	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
+	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &loaded.getMatrix()[0][0]);
+	glUniform1i(has_tex_loc, 1);
+	loaded.draw();
+	shader.detach();
+
+	shader.attach();
+	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
+	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
+	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &tm.getMatrix()[0][0]);
+	glUniform1i(has_tex_loc, 1);
+	tm.draw();
+	shader.detach();
+	glBindTexture(GL_TEXTURE_2D, 0);
+	
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, crate.getId());

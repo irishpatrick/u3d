@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(temp)
+project(game)
 
 if (MSVC)
 
@@ -9,7 +9,7 @@ set(CMAKE_MSVCIDE_RUN_PATH "D:\\vcpkg\\installed\\x86-windows\\bin")
 find_package(GLEW REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
-find_library(ASSIMP_LIB assimp-vc140-mt REQUIRED)
+find_library(ASSIMP_LIB assimp-vc140-mtd REQUIRED)
 find_library(GL_LIB opengl32 REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(sdl2-image CONFIG REQUIRED)
@@ -21,6 +21,7 @@ set(LIB
 	SDL2::SDL2
 	SDL2::SDL2main
 	SDL2::SDL2_image
+	${ASSIMP_LIB}
 )
 
 if (MSVC)

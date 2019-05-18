@@ -15,15 +15,16 @@ public:
 	void generate();
 	void draw();
 
+	std::vector<GLfloat> vertices;
+	std::vector<GLfloat> normals;
+	std::vector<GLfloat> texcoords;
+	std::vector<uint32_t> indices;
+
 protected:
 	GLuint vbo;
 	GLuint tbo;
 	GLuint nbo;
 	GLuint ibo;
 	GLuint vao;
-	std::vector<GLfloat> vertices;
-	std::vector<GLfloat> normals;
-	std::vector<GLfloat> texcoords;
-	std::vector<uint32_t> indices;
 	int triangles;
 };

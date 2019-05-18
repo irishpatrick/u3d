@@ -4,11 +4,9 @@
 #include "Mesh.hpp"
 #include "Scene.hpp"
 
-#include <assimp/Importer.hpp>
-
 class Assets
 {
 public:
-	Mesh loadMesh(const std::string&);
-	Scene loadScene(const std::string&);
+	static Mesh loadMesh(const std::string&);
+	static Scene loadScene(const std::string&);
 };

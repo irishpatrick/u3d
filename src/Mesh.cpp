@@ -30,6 +30,7 @@ void Mesh::generate()
 
 	if (vertices.size() > 0)
 	{
+		printf("v");
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), &vertices[0], GL_STATIC_DRAW);
@@ -37,6 +38,7 @@ void Mesh::generate()
 	
 	if (texcoords.size() > 0)
 	{
+		printf("t");
 		glGenBuffers(1, &tbo);
 		glBindBuffer(GL_ARRAY_BUFFER, tbo);
 		glBufferData(GL_ARRAY_BUFFER, texcoords.size() * sizeof(GLfloat), &texcoords[0], GL_STATIC_DRAW);
@@ -44,10 +46,13 @@ void Mesh::generate()
 	
 	if (normals.size() > 0)
 	{
+		printf("n");
 		glGenBuffers(1, &nbo);
 		glBindBuffer(GL_ARRAY_BUFFER, nbo);
 		glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(GLfloat), &normals[0], GL_STATIC_DRAW);
 	}
+
+	printf("\n");
 }
 
 void Mesh::draw()
@@ -82,7 +87,14 @@ void Mesh::draw()
 		);
 	}
 	
-	glDrawArrays(GL_TRIANGLES, 0, triangles * 3);
+	if (indices.size() > 0)
+	{
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, &indices[0]);
+	}
+	else
+	{
+		glDrawArrays(GL_TRIANGLES, 0, triangles * 3);
+	}
 
 	if (vertices.size() > 0)
 	{
