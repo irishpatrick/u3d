@@ -100,6 +100,8 @@ void update(float delta)
 
 	loaded.rotation.x += 0.5f * delta;
 
+	camera.rotation.y += 0.2f * delta;
+
 	camera.update();
 	test.update();
 	cube.update();

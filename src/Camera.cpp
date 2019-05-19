@@ -21,6 +21,7 @@ void Camera::setup(float fov, float aspect, float near, float far)
 void Camera::lookAt(Object3D* obj)
 {
 	target = obj->position;
+	matrix = glm::lookAt(position, target, Util::jhat());
 }
 
 void Camera::update()
