@@ -39,25 +39,11 @@ void init()
 	tm.init();
 	tm.generate();
 
-	printf("v=%d t=%d i=%d\n", loaded.vertices.size(), loaded.texcoords.size(), loaded.indices.size());
 	loaded = Assets::loadMesh("assets/cube.obj");
-	printf("v=%d t=%d i=%d\n", loaded.vertices.size(), loaded.texcoords.size(), loaded.indices.size());
 	
-	printf("sanity check\n");
-	for (auto& e : loaded.vertices)
-	{
-		printf("%f ", e);
-	}
-	printf("\n");
-	for (auto& e : loaded.indices)
-	{
-		printf("%u ", e);
-	}
-	printf("\n");
 	loaded.generate();
 	//loaded.position.z = -1;
 	//loaded.position.x = -1;
-
 
 	crate.load("assets/crate_diffuse.png");
 

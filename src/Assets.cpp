@@ -16,8 +16,6 @@ void processNode(Mesh& mesh, aiNode* node, const aiScene* scene)
 		return;
 	}
 
-	printf("children=%d\tmeshes=%d\n", node->mNumChildren, node->mNumMeshes);
-
 	unsigned int i;
 	for (i = 0; i < node->mNumMeshes; ++i)
 	{
@@ -31,7 +29,6 @@ void processNode(Mesh& mesh, aiNode* node, const aiScene* scene)
 
 void processMesh(Mesh& mesh, aiMesh* amesh, const aiScene* scene)
 {
-	printf("process mesh\n");
 	if (amesh == nullptr || scene == nullptr)
 	{
 		printf("null args\n");
@@ -42,10 +39,8 @@ void processMesh(Mesh& mesh, aiMesh* amesh, const aiScene* scene)
 	{
 		for (j = 0; j < 3; ++j)
 		{
-			printf("%f ", amesh->mVertices[i][j]);
 			mesh.vertices.push_back(amesh->mVertices[i][j]);
 		}
-		printf("\n");
 		for (j = 0; j < 3; ++j)
 		{
 			mesh.normals.push_back(amesh->mNormals[i][j]);
@@ -54,10 +49,8 @@ void processMesh(Mesh& mesh, aiMesh* amesh, const aiScene* scene)
 		{
 			for (j = 0; j < 2; ++j)
 			{
-		//		printf("%f ", amesh->mVertices[i][j]);
 				mesh.texcoords.push_back(amesh->mTextureCoords[0][i][j]);
 			}
-		//	printf("\n");
 		}
 	}
 
@@ -66,10 +59,8 @@ void processMesh(Mesh& mesh, aiMesh* amesh, const aiScene* scene)
 		aiFace face = amesh->mFaces[i];
 		for (j = 0; j < face.mNumIndices; ++j)
 		{
-			printf("%u ", face.mIndices[j]);
 			mesh.indices.push_back(face.mIndices[j]);
 		}
-		printf("\n");
 	}
 }
 
