@@ -6,6 +6,7 @@
 Camera::Camera() : Object3D()
 {
 	projection = glm::mat4(1.0f);
+	target = glm::vec3(0.0f);
 }
 
 Camera::~Camera()
@@ -16,17 +17,20 @@ Camera::~Camera()
 void Camera::setup(float fov, float aspect, float near, float far)
 {
 	projection = glm::perspective(glm::radians(fov), aspect, near, far);
+	up = Util::jhat();
 }
 
 void Camera::lookAt(Object3D* obj)
 {
 	target = obj->position;
-	matrix = glm::lookAt(position, target, Util::jhat());
+	direction = glm::normalize(position - target);
+	right = glm::normalize(glm::cross(up, direction));
+	up = glm::cross(direction, right);
 }
 
 void Camera::update()
 {
-	matrix = glm::lookAt(position, target, Util::jhat());
+	Object3D::update();
 }
 
 glm::mat4 Camera::getProjectionMatrix()

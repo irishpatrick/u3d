@@ -14,6 +14,9 @@ public:
 
 	void addChild(Object3D&);
 
+	void translateX(float);
+	void translateZ(float);
+
 	glm::vec3 position;
 	glm::vec3 rotation;
 	glm::vec3 scale;
@@ -21,4 +24,7 @@ public:
 protected:
 	glm::mat4 matrix;
 	std::vector<Object3D*> children;
+	glm::vec3 right;
+	glm::vec3 up;
+	glm::vec3 direction;
 };

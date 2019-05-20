@@ -11,33 +11,22 @@
 #include "Util.hpp"
 #include "Assets.hpp"
 #include "TestMesh.hpp"
+#include "FirstPersonCamera.hpp"
 
 int running = 1;
 Context ctx;
-Triangle test;
-Cube cube;
 Shader shader;
-Camera camera;
+FirstPersonCamera camera;
 GLuint model_loc;
 GLuint view_loc;
 GLuint projection_loc;
 GLuint has_tex_loc;
 Texture crate;
 Mesh loaded;
-TestMesh tm;
 
 void init()
 {
 	ctx.init();
-
-	test.init();
-	test.generate();
-	
-	cube.init();
-	cube.generate();
-
-	tm.init();
-	tm.generate();
 
 	loaded = Assets::loadMesh("assets/cube.obj");
 	
@@ -45,7 +34,7 @@ void init()
 	//loaded.position.z = -1;
 	//loaded.position.x = -1;
 
-	crate.load("assets/crate_diffuse.png");
+	crate.load("assets/uv2k.png");
 
 	//cube.position.x = 2;
 	//cube.position.z = -4;
@@ -53,9 +42,9 @@ void init()
 	shader.createShader("assets/vertex.glsl", "assets/fragment.glsl");
 
 	camera.setup(70.0f, 16.0f / 9.0f, 0.1f, 100.0f);
-	camera.position.x = 4;
-	camera.position.y = 3;
-	camera.position.z = 3;
+	//camera.position.x = 4;
+	//camera.position.y = 3;
+	camera.position.z = 5;
 
 	camera.target = glm::vec3(0, 0, 0);
 
@@ -68,6 +57,13 @@ void init()
 void update(float delta)
 {
 	int esc = glfwGetKey(ctx.window, GLFW_KEY_ESCAPE) == GLFW_PRESS;
+	int w = glfwGetKey(ctx.window, GLFW_KEY_W) == GLFW_PRESS;
+	int s = glfwGetKey(ctx.window, GLFW_KEY_S) == GLFW_PRESS;
+	int a = glfwGetKey(ctx.window, GLFW_KEY_A) == GLFW_PRESS;
+	int d = glfwGetKey(ctx.window, GLFW_KEY_D) == GLFW_PRESS;
+	int q = glfwGetKey(ctx.window, GLFW_KEY_Q) == GLFW_PRESS;
+	int e = glfwGetKey(ctx.window, GLFW_KEY_E) == GLFW_PRESS;
+
 	if (esc)
 	{
 		running = 0;
@@ -77,35 +73,46 @@ void update(float delta)
 		running = 0;
 	}
 
-	cube.position.x = 3 * sin(2 * cube.rotation.y);
-	cube.position.y = 3 * cos(2 * cube.rotation.y);
-	cube.rotation.y += 0.5f * delta;
-	cube.rotation.x += 0.5f * delta;
+	if (w)
+	{
+		camera.translateZ(10.0f * delta);
+	}
 
-	test.rotation.y += 0.5f * delta;
+	if (s)
+	{
+		camera.translateZ(-10.0f * delta);
+	}
 
-	loaded.rotation.x += 0.5f * delta;
+	if (a)
+	{
+		camera.translateX(10.0f * delta);
+	}
 
-	camera.rotation.y += 0.2f * delta;
+	if (d)
+	{
+		camera.translateX(-10.0f * delta);
+	}
+
+	if (q)
+	{
+		camera.rotation.y -= 80.0f * delta;
+	}
+
+	if (e)
+	{
+		camera.rotation.y += 80.0f * delta;
+	}
+
+	//loaded.rotation.x += 0.5f * delta;
+
+	//camera.rotation.y += 10.0f * delta;
 
 	camera.update();
-	test.update();
-	cube.update();
 	loaded.update();
-	tm.update();
 }
 
 void draw()
 {
-	shader.attach();
-	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
-	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
-	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &test.getMatrix()[0][0]);
-	glUniform1i(has_tex_loc, 0);
-	//printf("SANITY CHECK\n%s\n%s\n%s\n", glm::to_string(camera.getProjectionMatrix()).c_str(), glm::to_string(camera.getMatrix()).c_str(), glm::to_string(test.getMatrix()).c_str());
-	test.draw();
-	shader.detach();
-
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, crate.getId());
 	shader.attach();
@@ -115,28 +122,6 @@ void draw()
 	glUniform1i(has_tex_loc, 1);
 	loaded.draw();
 	shader.detach();
-
-	shader.attach();
-	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
-	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
-	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &tm.getMatrix()[0][0]);
-	glUniform1i(has_tex_loc, 1);
-	tm.draw();
-	shader.detach();
-	glBindTexture(GL_TEXTURE_2D, 0);
-	
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, crate.getId());
-	shader.attach();
-	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
-	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
-	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &cube.getMatrix()[0][0]);
-	glUniform1i(has_tex_loc, 1);
-	//printf("SANITY CHECK\n%s\n%s\n%s\n", glm::to_string(camera.getProjectionMatrix()).c_str(), glm::to_string(camera.getMatrix()).c_str(), glm::to_string(test.getMatrix()).c_str());
-	cube.draw();
-	shader.detach();
-	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 int main(int argc, char* argv[])

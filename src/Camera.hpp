@@ -16,6 +16,6 @@ public:
 
 	glm::vec3 target;
 
-private:
+protected:
 	glm::mat4 projection;
 };

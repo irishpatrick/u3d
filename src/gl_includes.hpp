@@ -1,5 +1,8 @@
 #pragma once
 
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #ifdef __linux__
 
 #include <GL/glew.h>

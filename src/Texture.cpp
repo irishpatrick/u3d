@@ -44,6 +44,11 @@ void Texture::load(const std::string& fn)
 	}*/
 
 	SDL_Surface* surface = IMG_Load(fn.c_str());
+	if (surface == nullptr)
+	{
+		printf("texture error: %s\n", IMG_GetError());
+		return;
+	}
 
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
