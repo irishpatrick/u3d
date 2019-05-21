@@ -102,21 +102,20 @@ void update(float delta)
 
 	//camera.rotation.y += 10.0f * delta;
 
-	camera.rotation.y += 100 * Mouse::x;
-	camera.rotation.x += -100 * Mouse::y;
+	camera.rotation.y += 80 * Mouse::x;
+	camera.rotation.x += 80 * Mouse::y;
 
 	if (camera.rotation.x >= 89.0f)
 	{
 		camera.rotation.x = 89.0f;
-		Mouse::y = -1.0f;
 	}
 
 	if (camera.rotation.x < -89.0f)
 	{
 		camera.rotation.x = -89.0f;
-		Mouse::y = 1.0f;
 	}
 
+    Mouse::update();
 	camera.update();
 	loaded.update();
 }

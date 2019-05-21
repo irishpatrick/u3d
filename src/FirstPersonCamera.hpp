@@ -8,4 +8,7 @@ public:
 	FirstPersonCamera();
 	~FirstPersonCamera();
 	void update();
+
+private:
+    Object3D yaw;
 };

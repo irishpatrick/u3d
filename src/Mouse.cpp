@@ -1,18 +1,21 @@
 #include "Mouse.hpp"
 
+GLFWwindow* Mouse::window = nullptr;
+
 float Mouse::x = 0.0f;
 float Mouse::y = 0.0f;
 
-float lx = 0.0f;
-float ly = 0.0f;
+double lx = 0.0f;
+double ly = 0.0f;
 
-void Mouse::attach(GLFWwindow* window)
+void Mouse::attach(GLFWwindow* w)
 {
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetInputMode(window, GLFW_STICKY_MOUSE_BUTTONS, GLFW_TRUE);
-	glfwSetCursorPosCallback(window, Mouse::move_callback);
-	glfwSetMouseButtonCallback(window, Mouse::click_callback);
-	glfwSetScrollCallback(window, Mouse::scroll_callback);
+    window = w;
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//glfwSetInputMode(window, GLFW_STICKY_MOUSE_BUTTONS, GLFW_TRUE);
+	//glfwSetCursorPosCallback(window, Mouse::move_callback);
+	//glfwSetMouseButtonCallback(window, Mouse::click_callback);
+	//glfwSetScrollCallback(window, Mouse::scroll_callback);
 }
 
 void Mouse::move_callback(GLFWwindow* window, double mx, double my)
@@ -34,4 +37,19 @@ void Mouse::click_callback(GLFWwindow*, int, int, int)
 
 void Mouse::scroll_callback(GLFWwindow*, double, double)
 {
+}
+
+void Mouse::update()
+{
+
+	int w = -1;
+	int h = -1;
+	glfwGetWindowSize(window, &w, &h);
+    double mx, my;
+    glfwGetCursorPos(window, &mx, &my);
+
+    x = (float)(mx / (double)w - 0.5);
+    y = -1.0 * (float)(my / (double)h - 0.5);
+
+    glfwSetCursorPos(window, (double)(w)/2.0, (double)(h)/2.0);
 }
