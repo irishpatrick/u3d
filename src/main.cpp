@@ -12,6 +12,7 @@
 #include "Assets.hpp"
 #include "TestMesh.hpp"
 #include "FirstPersonCamera.hpp"
+#include "Mouse.hpp"
 
 int running = 1;
 Context ctx;
@@ -27,6 +28,7 @@ Mesh loaded;
 void init()
 {
 	ctx.init();
+	Mouse::attach(ctx.window);
 
 	loaded = Assets::loadMesh("assets/cube.obj");
 	
@@ -48,6 +50,7 @@ void init()
 
 void update(float delta)
 {
+	//printf("%f,%f\n", Mouse::x, Mouse::y);
 	int esc = glfwGetKey(ctx.window, GLFW_KEY_ESCAPE) == GLFW_PRESS;
 	int w = glfwGetKey(ctx.window, GLFW_KEY_W) == GLFW_PRESS;
 	int s = glfwGetKey(ctx.window, GLFW_KEY_S) == GLFW_PRESS;
@@ -98,6 +101,19 @@ void update(float delta)
 	//loaded.rotation.x += 0.5f * delta;
 
 	//camera.rotation.y += 10.0f * delta;
+
+	camera.rotation.y = 100 * Mouse::x;
+	camera.rotation.x = -100 * Mouse::y;
+
+	if (camera.rotation.x >= 89.0f)
+	{
+		camera.rotation.x = 89.0f;
+	}
+
+	if (camera.rotation.x < -89.0f)
+	{
+		camera.rotation.x = -89.0f;
+	}
 
 	camera.update();
 	loaded.update();

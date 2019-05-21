@@ -1,6 +1,5 @@
 #include "Context.hpp"
 #include <cstdio>
-#include <cstdlib>
 
 Context::Context()
 {
@@ -46,6 +45,7 @@ void Context::init()
 	}
 
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glClearColor(0.87f, 0.87f, 0.87f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
