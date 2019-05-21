@@ -27,7 +27,16 @@ void Object3D::update()
 	direction.z = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y) - (float)M_PI / 2.0f);
 	direction = glm::normalize(direction);
 
-	glm::mat4 t = glm::translate(glm::mat4(1.0f), position);
+	glm::mat4 t(1.0f);
+	if (parent != nullptr)
+	{
+		t = glm::translate(glm::mat4(1.0f), position + (parent->position - offset));
+	}
+	else
+	{
+		t = glm::translate(glm::mat4(1.0f), position);
+	}
+	
 	glm::mat4 rx = glm::rotate(rotation.x, Util::ihat());
 	glm::mat4 ry = glm::rotate(rotation.y, Util::jhat());
 	glm::mat4 rz = glm::rotate(rotation.z, Util::khat());
@@ -46,6 +55,12 @@ void Object3D::addChild(Object3D& obj)
 	children.push_back(&obj);
 }
 
+void Object3D::setParent(Object3D& obj)
+{
+	parent = &obj;
+	offset = parent->position;
+}
+
 void Object3D::translateX(float amount)
 {
 	right = glm::normalize(glm::cross(up, direction));
@@ -58,3 +73,4 @@ void Object3D::translateZ(float amount)
 {
 	position += amount * direction;
 }
+

@@ -50,7 +50,7 @@ void init()
 
 void update(float delta)
 {
-	//printf("%f,%f\n", Mouse::x, Mouse::y);
+	printf("%f,%f\n", Mouse::x, Mouse::y);
 	int esc = glfwGetKey(ctx.window, GLFW_KEY_ESCAPE) == GLFW_PRESS;
 	int w = glfwGetKey(ctx.window, GLFW_KEY_W) == GLFW_PRESS;
 	int s = glfwGetKey(ctx.window, GLFW_KEY_S) == GLFW_PRESS;
@@ -102,17 +102,19 @@ void update(float delta)
 
 	//camera.rotation.y += 10.0f * delta;
 
-	camera.rotation.y = 100 * Mouse::x;
-	camera.rotation.x = -100 * Mouse::y;
+	camera.rotation.y += 100 * Mouse::x;
+	camera.rotation.x += -100 * Mouse::y;
 
 	if (camera.rotation.x >= 89.0f)
 	{
 		camera.rotation.x = 89.0f;
+		Mouse::y = -1.0f;
 	}
 
 	if (camera.rotation.x < -89.0f)
 	{
 		camera.rotation.x = -89.0f;
+		Mouse::y = 1.0f;
 	}
 
 	camera.update();

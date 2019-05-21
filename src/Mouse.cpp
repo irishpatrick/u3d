@@ -3,6 +3,9 @@
 float Mouse::x = 0.0f;
 float Mouse::y = 0.0f;
 
+float lx = 0.0f;
+float ly = 0.0f;
+
 void Mouse::attach(GLFWwindow* window)
 {
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -17,8 +20,12 @@ void Mouse::move_callback(GLFWwindow* window, double mx, double my)
 	int w = -1;
 	int h = -1;
 	glfwGetWindowSize(window, &w, &h);
-	x = (float)mx / (float)w - 0.5f;
-	y = (float)my / (float)h - 0.5f;
+	float tx = (float)mx / (float)w - 0.5f;
+	float ty = (float)my / (float)h - 0.5f;
+	x = tx - lx;
+	y = ty - ly;
+	lx = tx;
+	ly = ty;
 }
 
 void Mouse::click_callback(GLFWwindow*, int, int, int)
