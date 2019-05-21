@@ -31,22 +31,14 @@ void init()
 	loaded = Assets::loadMesh("assets/cube.obj");
 	
 	loaded.generate();
-	//loaded.position.z = -1;
-	//loaded.position.x = -1;
 
 	crate.load("assets/uv2k.png");
-
-	//cube.position.x = 2;
-	//cube.position.z = -4;
 
 	shader.createShader("assets/vertex.glsl", "assets/fragment.glsl");
 
 	camera.setup(70.0f, 16.0f / 9.0f, 0.1f, 100.0f);
-	//camera.position.x = 4;
-	//camera.position.y = 3;
 	camera.position.z = 5;
-
-	camera.target = glm::vec3(0, 0, 0);
+	camera.position.y = 2;
 
 	view_loc = shader.getUniform("view");
 	projection_loc = shader.getUniform("projection");
