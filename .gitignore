@@ -5,6 +5,7 @@ assets/*.swp
 # vscode
 .vscode/
 .vs/
+
 CMakeSettings.json
 
 # build directory
