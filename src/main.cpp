@@ -50,7 +50,7 @@ void init()
 
 void update(float delta)
 {
-	printf("%f,%f\n", Mouse::x, Mouse::y);
+	//printf("%f,%f\n", Mouse::x, Mouse::y);
 	int esc = glfwGetKey(ctx.window, GLFW_KEY_ESCAPE) == GLFW_PRESS;
 	int w = glfwGetKey(ctx.window, GLFW_KEY_W) == GLFW_PRESS;
 	int s = glfwGetKey(ctx.window, GLFW_KEY_S) == GLFW_PRESS;

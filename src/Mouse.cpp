@@ -25,8 +25,8 @@ void Mouse::move_callback(GLFWwindow* window, double mx, double my)
 	glfwGetWindowSize(window, &w, &h);
 	float tx = (float)mx / (float)w - 0.5f;
 	float ty = (float)my / (float)h - 0.5f;
-	x = tx - lx;
-	y = ty - ly;
+	x = (float)(tx - lx);
+	y = (float)(ty - ly);
 	lx = tx;
 	ly = ty;
 }
@@ -49,7 +49,7 @@ void Mouse::update()
     glfwGetCursorPos(window, &mx, &my);
 
     x = (float)(mx / (double)w - 0.5);
-    y = -1.0 * (float)(my / (double)h - 0.5);
+    y = -1.0f * (float)(my / (double)h - 0.5);
 
     glfwSetCursorPos(window, (double)(w)/2.0, (double)(h)/2.0);
 }
