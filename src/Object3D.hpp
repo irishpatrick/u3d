@@ -13,6 +13,7 @@ public:
 	void update(Object3D&);
 
 	glm::mat4 getMatrix();
+	glm::mat4 accumulateMatrices();
 
 	void addChild(Object3D&);
 	void setParent(Object3D&);
@@ -26,7 +27,7 @@ public:
 	glm::vec3 rotation;
 	glm::vec3 scale;
 
-protected:
+protected: 
 	glm::mat4 matrix;
 	std::vector<Object3D*> children;
 	glm::vec3 right;

@@ -115,7 +115,7 @@ void update(float delta)
 	//camera.rotation.y += 80 * Mouse::x;
 	//camera.rotation.x += 80 * Mouse::y;
 
-	test.position.x = 4 + sin(2 * loaded.rotation.y);
+	test.position.x = 4 +  4 * sin(8 * loaded.rotation.y);
 
 	if (camera.rotation.x >= 89.0f)
 	{

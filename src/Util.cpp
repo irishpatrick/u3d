@@ -1,5 +1,6 @@
 #include "Util.hpp"
 #include <chrono>
+#include <sstream>
 
 glm::vec3 Util::ihat()
 {
@@ -19,6 +20,13 @@ glm::vec3 Util::khat()
 float Util::distance(glm::vec3& a, glm::vec3& b)
 {
 	return sqrtf(powf(b.x - a.x, 2) + powf(b.y - a.y, 2) + powf(b.z - a.z, 2));
+}
+
+const std::string Util::vector_to_str(glm::vec3& v)
+{
+	std::stringstream ss;
+	ss << "<" << v.x << "," << v.y << "," << v.z << ">";
+	return ss.str();
 }
 
 unsigned int Util::currentTimeMillis()

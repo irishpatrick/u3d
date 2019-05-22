@@ -57,8 +57,6 @@ void Object3D::update(Object3D& parent)
 	glm::mat4 rx(1.0f), ry(1.0f), rz(1.0f);
 	glm::mat4 prx(1.0f), pry(1.0f), prz(1.0f);
 
-	printf("%f\t", position.x);
-
 	t = glm::translate(glm::mat4(1.0f), position);
 	rx = glm::rotate(rotation.x, Util::ihat());
 	ry = glm::rotate(rotation.y, Util::jhat());
@@ -83,6 +81,15 @@ glm::mat4 Object3D::getMatrix()
 	return matrix;
 }
 
+glm::mat4 Object3D::accumulateMatrices()
+{
+	if (parent != nullptr)
+	{
+		return parent->accumulateMatrices()* matrix;
+	}
+	return matrix;
+}
+
 void Object3D::addChild(Object3D& obj)
 {
 	obj.setParent(*this);
@@ -91,7 +98,6 @@ void Object3D::addChild(Object3D& obj)
 
 void Object3D::setParent(Object3D& obj)
 {
-	printf("setparent\n");
 	parent = &obj;
 	position = position - obj.position;
 	rotation = rotation - obj.rotation;
@@ -101,7 +107,7 @@ glm::vec3 Object3D::getRealPos()
 {
 	if (parent != nullptr)
 	{
-		return parent->getRealPos() + position;
+		return glm::vec3(parent->accumulateMatrices() * glm::vec4(position, 1));
 	}
 	return position;
 }
