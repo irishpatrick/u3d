@@ -12,6 +12,7 @@ public:
 	void setup(float, float, float, float);
 	void lookAt(Object3D*);
 	void update();
+	void update(Object3D&);
 	glm::mat4 getProjectionMatrix();
 
 	glm::vec3 target;

@@ -10,9 +10,21 @@ FirstPersonCamera::~FirstPersonCamera()
 {
 }
 
+void FirstPersonCamera::setup(float fov, float aspect, float near, float far)
+{
+	camera.setup(fov, aspect, near, far);
+	addChild(camera);
+}
+
 void FirstPersonCamera::update()
 {
-	Object3D::update();
-	matrix = glm::lookAt(position, position + direction, up);
-	//matrix = glm::lookAt(position, glm::vec3(0, 0, 0), up);
+	camera.rotation.x = rotation.x;
+	rotation.x = 0;
+	rotation.z = 0;
+	Object3D::update();	
+}
+
+glm::mat4 FirstPersonCamera::getProjectionMatrix()
+{
+	return camera.getProjectionMatrix();
 }

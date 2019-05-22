@@ -12,7 +12,7 @@ Object3D::Object3D()
 	right = glm::vec3();
 	up = Util::jhat();
 	direction = glm::vec3();
-
+	parent = nullptr;
 }
 
 Object3D::~Object3D()
@@ -28,18 +28,14 @@ void Object3D::update()
 	direction = glm::normalize(direction);
 
 	glm::mat4 t(1.0f);
-	if (parent != nullptr)
-	{
-		t = glm::translate(glm::mat4(1.0f), position + (parent->position - offset));
-	}
-	else
-	{
-		t = glm::translate(glm::mat4(1.0f), position);
-	}
+	glm::mat4 rx(1.0f), ry(1.0f), rz(1.0f);
+
+	t = glm::translate(glm::mat4(1.0f), position);
+	rx = glm::rotate(rotation.x, Util::ihat());
+	ry = glm::rotate(rotation.y, Util::jhat());
+	rz = glm::rotate(rotation.z, Util::khat());
+
 	
-	glm::mat4 rx = glm::rotate(rotation.x, Util::ihat());
-	glm::mat4 ry = glm::rotate(rotation.y, Util::jhat());
-	glm::mat4 rz = glm::rotate(rotation.z, Util::khat());
 	glm::mat4 s = glm::scale(scale);
 
 	matrix = t * rx * ry * rz * s;
@@ -52,7 +48,34 @@ void Object3D::update()
 
 void Object3D::update(Object3D& parent)
 {
+	direction.x = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y) - (float)M_PI / 2.0f);
+	direction.y = sin(glm::radians(rotation.x));
+	direction.z = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y) - (float)M_PI / 2.0f);
+	direction = glm::normalize(direction);
+	
+	glm::mat4 t(1.0f);
+	glm::mat4 rx(1.0f), ry(1.0f), rz(1.0f);
+	glm::mat4 prx(1.0f), pry(1.0f), prz(1.0f);
 
+	printf("%f\t", position.x);
+
+	t = glm::translate(glm::mat4(1.0f), position);
+	rx = glm::rotate(rotation.x, Util::ihat());
+	ry = glm::rotate(rotation.y, Util::jhat());
+	rz = glm::rotate(rotation.z, Util::khat());
+	//prx = glm::rotate(parent.rotation.x, Util::ihat());
+	//pry = glm::rotate(parent.rotation.y, Util::jhat());
+	//prz = glm::rotate(parent.rotation.z, Util::khat());
+
+	glm::mat4 s = glm::scale(scale);
+
+	matrix = parent.getMatrix() * t * rx * ry * rz * s;
+
+	for (auto& e : children)
+	{
+		e->update(*this);
+	}
+	printf("\n");
 }
 
 glm::mat4 Object3D::getMatrix()
@@ -62,7 +85,25 @@ glm::mat4 Object3D::getMatrix()
 
 void Object3D::addChild(Object3D& obj)
 {
+	obj.setParent(*this);
 	children.push_back(&obj);
+}
+
+void Object3D::setParent(Object3D& obj)
+{
+	printf("setparent\n");
+	parent = &obj;
+	position = position - obj.position;
+	rotation = rotation - obj.rotation;
+}
+
+glm::vec3 Object3D::getRealPos()
+{
+	if (parent != nullptr)
+	{
+		return parent->getRealPos() + position;
+	}
+	return position;
 }
 
 void Object3D::translateX(float amount)

@@ -15,6 +15,9 @@ public:
 	glm::mat4 getMatrix();
 
 	void addChild(Object3D&);
+	void setParent(Object3D&);
+
+	glm::vec3 getRealPos();
 
 	void translateX(float);
 	void translateZ(float);
@@ -30,5 +33,4 @@ protected:
 	glm::vec3 up;
 	glm::vec3 direction;
 	Object3D* parent;
-	glm::vec3 offset;
 };

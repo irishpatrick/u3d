@@ -6,6 +6,7 @@ public:
 	static glm::vec3 ihat();
 	static glm::vec3 jhat();
 	static glm::vec3 khat();
+	static float distance(glm::vec3&, glm::vec3&);
 
 	static unsigned int currentTimeMillis();
 };

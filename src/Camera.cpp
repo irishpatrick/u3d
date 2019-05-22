@@ -30,7 +30,12 @@ void Camera::lookAt(Object3D* obj)
 
 void Camera::update()
 {
-	Object3D::update();
+	matrix = glm::lookAt(position, position + direction, up);
+}
+
+void Camera::update(Object3D& parent)
+{
+	matrix = parent.getMatrix() * glm::lookAt(getRealPos(), getRealPos() + direction, up);
 }
 
 glm::mat4 Camera::getProjectionMatrix()
