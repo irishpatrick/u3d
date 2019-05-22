@@ -43,6 +43,16 @@ void Object3D::update()
 	glm::mat4 s = glm::scale(scale);
 
 	matrix = t * rx * ry * rz * s;
+
+	for (auto& e : children)
+	{
+		e->update(*this);
+	}
+}
+
+void Object3D::update(Object3D& parent)
+{
+
 }
 
 glm::mat4 Object3D::getMatrix()
@@ -53,12 +63,6 @@ glm::mat4 Object3D::getMatrix()
 void Object3D::addChild(Object3D& obj)
 {
 	children.push_back(&obj);
-}
-
-void Object3D::setParent(Object3D& obj)
-{
-	parent = &obj;
-	offset = parent->position;
 }
 
 void Object3D::translateX(float amount)

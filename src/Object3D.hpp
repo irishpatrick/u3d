@@ -10,10 +10,11 @@ public:
 	~Object3D();
 
 	void update();
+	void update(Object3D&);
+
 	glm::mat4 getMatrix();
 
 	void addChild(Object3D&);
-	void setParent(Object3D&);
 
 	void translateX(float);
 	void translateZ(float);
