@@ -20,12 +20,17 @@ void Camera::setup(float fov, float aspect, float near, float far)
 	up = Util::jhat();
 }
 
-void Camera::lookAt(Object3D* obj)
+void Camera::lookAt(Object3D& obj)
 {
-	target = obj->getRealPos();
+	target = obj.getRealPos();
 	direction = glm::normalize(position - target);
 	right = glm::normalize(glm::cross(up, direction));
 	up = glm::cross(direction, right);
+}
+
+void Camera::lookAt(glm::vec3& v)
+{
+    target = v;
 }
 
 void Camera::update()
@@ -35,7 +40,7 @@ void Camera::update()
 
 void Camera::update(Object3D& parent)
 {
-	matrix = parent.getMatrix() * glm::lookAt(getRealPos(), getRealPos() + direction, up);
+	matrix = parent.getMatrix() * glm::lookAt(getRealPos(), target, up);
 }
 
 glm::mat4 Camera::getProjectionMatrix()

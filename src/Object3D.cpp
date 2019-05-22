@@ -61,9 +61,6 @@ void Object3D::update(Object3D& parent)
 	rx = glm::rotate(rotation.x, Util::ihat());
 	ry = glm::rotate(rotation.y, Util::jhat());
 	rz = glm::rotate(rotation.z, Util::khat());
-	//prx = glm::rotate(parent.rotation.x, Util::ihat());
-	//pry = glm::rotate(parent.rotation.y, Util::jhat());
-	//prz = glm::rotate(parent.rotation.z, Util::khat());
 
 	glm::mat4 s = glm::scale(scale);
 
@@ -73,7 +70,6 @@ void Object3D::update(Object3D& parent)
 	{
 		e->update(*this);
 	}
-	printf("\n");
 }
 
 glm::mat4 Object3D::getMatrix()

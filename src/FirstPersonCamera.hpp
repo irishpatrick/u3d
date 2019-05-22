@@ -10,6 +10,8 @@ public:
 	~FirstPersonCamera();
 	void setup(float, float, float, float);
 	void update();
+    glm::mat4 getMatrix();
+    glm::mat4 getViewMatrix();
 	glm::mat4 getProjectionMatrix();
 
 private:

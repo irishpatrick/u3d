@@ -46,9 +46,9 @@ void init()
 
 	shader.createShader("assets/vertex.glsl", "assets/fragment.glsl");
 
-	tmp.setup(70.0f, 16.0f / 9.0f, 0.1f, 100.0f);
-	tmp.position.z = -7;
-	tmp.lookAt(&test);
+	camera.setup(70.0f, 16.0f / 9.0f, 0.1f, 100.0f);
+	camera.position.z = -7;
+	//tmp.lookAt(test);
 	//camera.position.y = 2;
 
 	view_loc = shader.getUniform("view");
@@ -112,8 +112,8 @@ void update(float delta)
 	//camera.rotation.y += sin(0.6f * delta);
 	//camera.rotation.x += cos(0.6f * delta);
 
-	//camera.rotation.y += 80 * Mouse::x;
-	//camera.rotation.x += 80 * Mouse::y;
+	camera.rotation.y += 60 * Mouse::x;
+	camera.rotation.x += 60 * Mouse::y;
 
 	test.position.x = 4 +  4 * sin(8 * loaded.rotation.y);
 
@@ -128,9 +128,9 @@ void update(float delta)
 	}
 
     Mouse::update();
-	//camera.update();
-	tmp.lookAt(&test);
-	tmp.update();
+	camera.update();
+	//tmp.lookAt(test);
+	//tmp.update();
 	loaded.update();
 	//test.update();
 }
@@ -140,8 +140,8 @@ void draw()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, crate.getId());
 	shader.attach();
-	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &tmp.getProjectionMatrix()[0][0]);
-	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &tmp.getMatrix()[0][0]);
+	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
+	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getViewMatrix()[0][0]);
 	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &loaded.getMatrix()[0][0]);
 	glUniform1i(has_tex_loc, 1);
 	loaded.draw();
@@ -150,8 +150,8 @@ void draw()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, crate.getId());
 	shader.attach();
-	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &tmp.getProjectionMatrix()[0][0]);
-	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &tmp.getMatrix()[0][0]);
+	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
+	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getViewMatrix()[0][0]);
 	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &test.getMatrix()[0][0]);
 	glUniform1i(has_tex_loc, 1);
 	test.draw();
