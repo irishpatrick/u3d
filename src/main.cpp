@@ -3,26 +3,30 @@
 #include <cmath>
 #include "Mesh.hpp"
 #include "Context.hpp"
-#include "Triangle.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
-#include "Cube.hpp"
 #include "Texture.hpp"
 #include "Util.hpp"
 #include "Assets.hpp"
-#include "TestMesh.hpp"
 #include "FirstPersonCamera.hpp"
 #include "Mouse.hpp"
 
 int running = 1;
+
 Context ctx;
+
 Shader shader;
+
 Camera camera;
+Object3D yaw;
+
 GLuint model_loc;
 GLuint view_loc;
 GLuint projection_loc;
 GLuint has_tex_loc;
+
 Texture crate;
+
 Mesh loaded;
 Mesh test;
 
@@ -46,9 +50,8 @@ void init()
 	shader.createShader("assets/vertex.glsl", "assets/fragment.glsl");
 
 	camera.setup(70.0f, 16.0f / 9.0f, 0.1f, 100.0f);
-	camera.position.z = -7;
-	//tmp.lookAt(test);
-	//camera.position.y = 2;
+	yaw.addChild(camera);
+    yaw.position.z = -7;
 
 	view_loc = shader.getUniform("view");
 	projection_loc = shader.getUniform("projection");
@@ -58,7 +61,6 @@ void init()
 
 void update(float delta)
 {
-	//printf("%f,%f\n", Mouse::x, Mouse::y);
 	int esc = glfwGetKey(ctx.window, GLFW_KEY_ESCAPE) == GLFW_PRESS;
 	int w = glfwGetKey(ctx.window, GLFW_KEY_W) == GLFW_PRESS;
 	int s = glfwGetKey(ctx.window, GLFW_KEY_S) == GLFW_PRESS;
@@ -78,32 +80,32 @@ void update(float delta)
 
 	if (w)
 	{
-		camera.translateZ(10.0f * delta);
+		yaw.translateZ(10.0f * delta);
 	}
 
 	if (s)
 	{
-		camera.translateZ(-10.0f * delta);
+		yaw.translateZ(-10.0f * delta);
 	}
 
 	if (a)
 	{
-		camera.translateX(10.0f * delta);
+		yaw.translateX(10.0f * delta);
 	}
 
 	if (d)
 	{
-		camera.translateX(-10.0f * delta);
+		yaw.translateX(-10.0f * delta);
 	}
 
 	if (q)
 	{
-		camera.rotation.y -= 80.0f * delta;
+		yaw.rotation.y -= 80.0f * delta;
 	}
 
 	if (e)
 	{
-		camera.rotation.y += 80.0f * delta;
+		yaw.rotation.y += 80.0f * delta;
 	}
 
 	loaded.rotation.y += 0.2f * delta;
@@ -111,7 +113,7 @@ void update(float delta)
 	//camera.rotation.y += sin(0.6f * delta);
 	//camera.rotation.x += cos(0.6f * delta);
 
-	camera.rotation.y += 60 * Mouse::x;
+	yaw.rotation.y += 60 * Mouse::x;
 	camera.rotation.x += 60 * Mouse::y;
 
 	test.position.x = 4 +  4 * sin(8 * loaded.rotation.y);
@@ -126,12 +128,17 @@ void update(float delta)
 		camera.rotation.x = -89.0f;
 	}
 
+    glm::vec3 dir;
+    dir.x = cos(glm::radians(camera.rotation.x)) * cos(glm::radians(camera.rotation.y));
+    dir.y = sin(glm::radians(camera.rotation.x));
+    dir.z = cos(glm::radians(camera.rotation.x)) * sin(glm::radians(camera.rotation.y));
+
+    camera.lookAt(dir);
+
     Mouse::update();
-	camera.update();
-	//tmp.lookAt(test);
-	//tmp.update();
+	yaw.update();
+    //camera.update();
 	loaded.update();
-	//test.update();
 }
 
 void draw()

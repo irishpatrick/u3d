@@ -9,8 +9,8 @@ public:
 	Object3D();
 	~Object3D();
 
-	void update();
-	void update(Object3D&);
+	virtual void update();
+	virtual void update(Object3D&);
 
 	glm::mat4 getMatrix();
 	glm::mat4 accumulateMatrices();
