@@ -43,15 +43,15 @@ void init()
 
 	test.position.x = 4;
 
-	loaded.addChild(test);
+	//loaded.addChild(test);
 
 	crate.load("assets/uv2k.png");
 
 	shader.createShader("assets/vertex.glsl", "assets/fragment.glsl");
 
 	camera.setup(70.0f, 16.0f / 9.0f, 0.1f, 100.0f);
-	yaw.addChild(camera);
-    yaw.position.z = -7;
+    camera.position.z = -7;
+    camera.position.y = 2;
 
 	view_loc = shader.getUniform("view");
 	projection_loc = shader.getUniform("projection");
@@ -108,14 +108,16 @@ void update(float delta)
 		yaw.rotation.y += 80.0f * delta;
 	}
 
-    loaded.rotation.y += 2.0f * delta;
-    loaded.translateZ(10.0f * delta);
+    //loaded.rotation.y = M_PI / 2.0f;
+    loaded.rotation.y -= 24.0f * delta;
+    
+    loaded.translateZ(2.0f * delta);
 
 	//camera.rotation.y += sin(0.6f * delta);
 	//camera.rotation.x += cos(0.6f * delta);
 
-	yaw.rotation.y += 60 * Mouse::x;
-	camera.rotation.x += 60 * Mouse::y;
+	//yaw.rotation.y += 60 * Mouse::x;
+	//camera.rotation.x += 60 * Mouse::y;
 
 	if (camera.rotation.x >= 89.0f)
 	{
@@ -127,18 +129,13 @@ void update(float delta)
 		camera.rotation.x = -89.0f;
 	}
 
-    glm::vec3 dir;
-    dir.x = cos(glm::radians(camera.rotation.x)) * cos(glm::radians(camera.rotation.y));
-    dir.y = sin(glm::radians(camera.rotation.x));
-    dir.z = cos(glm::radians(camera.rotation.x)) * sin(glm::radians(camera.rotation.y));
-
-    dir += camera.world_position;
-    camera.lookAt(dir);
+    camera.lookAt(test);
 
     Mouse::update();
-	yaw.update();
-    //camera.update();
+	//yaw.update();
+    camera.update();
 	loaded.update();
+    test.update();
 }
 
 void draw()

@@ -37,9 +37,20 @@ unsigned int Util::currentTimeMillis()
 	return (unsigned int)ms.count();
 }
 
-void Util::to_radians(glm::vec3& v)
+glm::vec3 Util::to_radians(glm::vec3& v)
 {
-    v.x = glm::radians(v.x);
-    v.y = glm::radians(v.y);
-    v.z = glm::radians(v.z);
+    glm::vec3 r;
+    r.x = glm::radians(v.x);
+    r.y = glm::radians(v.y);
+    r.z = glm::radians(v.z);
+
+    return r;
+}
+
+glm::vec3 Util::to_degrees(glm::vec3& v)
+{
+    glm::vec3 d;
+    d.x = glm::degrees(v.x);
+    d.y = glm::degrees(v.y);
+    d.z = glm::degrees(v.z);
 }
