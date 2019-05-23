@@ -17,8 +17,7 @@
 int running = 1;
 Context ctx;
 Shader shader;
-FirstPersonCamera camera;
-Camera tmp;
+Camera camera;
 GLuint model_loc;
 GLuint view_loc;
 GLuint projection_loc;
@@ -141,7 +140,7 @@ void draw()
 	glBindTexture(GL_TEXTURE_2D, crate.getId());
 	shader.attach();
 	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
-	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getViewMatrix()[0][0]);
+	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
 	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &loaded.getMatrix()[0][0]);
 	glUniform1i(has_tex_loc, 1);
 	loaded.draw();
@@ -151,7 +150,7 @@ void draw()
 	glBindTexture(GL_TEXTURE_2D, crate.getId());
 	shader.attach();
 	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
-	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getViewMatrix()[0][0]);
+	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
 	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &test.getMatrix()[0][0]);
 	glUniform1i(has_tex_loc, 1);
 	test.draw();
