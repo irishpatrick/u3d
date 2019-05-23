@@ -27,18 +27,13 @@ void Object3D::update()
 	direction.z = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y) - (float)M_PI / 2.0f);
 	direction = glm::normalize(direction);
 
-	glm::mat4 t(1.0f);
-	glm::mat4 rx(1.0f), ry(1.0f), rz(1.0f);
+    quaternion = glm::quat(rotation);
 
-	t = glm::translate(glm::mat4(1.0f), position);
-	rx = glm::rotate(rotation.x, Util::ihat());
-	ry = glm::rotate(rotation.y, Util::jhat());
-	rz = glm::rotate(rotation.z, Util::khat());
-
-	
+    glm::mat4 t = glm::translate(glm::mat4(1.0f), position);
+	glm::mat4 r = glm::toMat4(quaternion);
 	glm::mat4 s = glm::scale(scale);
 
-	matrix = t * rx * ry * rz * s;
+	matrix = t * r * s;
 
 	for (auto& e : children)
 	{

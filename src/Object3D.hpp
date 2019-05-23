@@ -34,4 +34,5 @@ protected:
 	glm::vec3 up;
 	glm::vec3 direction;
 	Object3D* parent;
+    glm::quat quaternion;
 };
