@@ -39,6 +39,8 @@ void Object3D::update()
 	{
 		e->update(*this);
 	}
+
+    decompose();
 }
 
 void Object3D::update(Object3D& parent)
@@ -47,24 +49,31 @@ void Object3D::update(Object3D& parent)
 	direction.y = sin(glm::radians(rotation.x));
 	direction.z = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y) - (float)M_PI / 2.0f);
 	direction = glm::normalize(direction);
-	
-	glm::mat4 t(1.0f);
-	glm::mat4 rx(1.0f), ry(1.0f), rz(1.0f);
-	glm::mat4 prx(1.0f), pry(1.0f), prz(1.0f);
 
-	t = glm::translate(glm::mat4(1.0f), position);
-	rx = glm::rotate(rotation.x, Util::ihat());
-	ry = glm::rotate(rotation.y, Util::jhat());
-	rz = glm::rotate(rotation.z, Util::khat());
+    glm::mat4 t = glm::translate(glm::mat4(1.0f), position);
+	
+    quaternion = glm::quat(rotation);
+    glm::mat4 r = glm::toMat4(quaternion);
 
 	glm::mat4 s = glm::scale(scale);
 
-	matrix = parent.getMatrix() * t * rx * ry * rz * s;
+	matrix = parent.getMatrix() * t * r * s;
+    
+    decompose();
 
 	for (auto& e : children)
 	{
 		e->update(*this);
 	}
+}
+
+void Object3D::decompose()
+{
+
+    glm::vec3 skew;
+    glm::vec4 persp;
+    glm::decompose(matrix, world_scale, world_quaternion, world_position, skew, persp);
+    world_rotation = glm::eulerAngles(world_quaternion);
 }
 
 glm::mat4 Object3D::getMatrix()

@@ -108,15 +108,11 @@ void update(float delta)
 		yaw.rotation.y += 80.0f * delta;
 	}
 
-	loaded.rotation.y += 0.2f * delta;
-
 	//camera.rotation.y += sin(0.6f * delta);
 	//camera.rotation.x += cos(0.6f * delta);
 
 	yaw.rotation.y += 60 * Mouse::x;
 	camera.rotation.x += 60 * Mouse::y;
-
-	test.position.x = 4 +  4 * sin(8 * loaded.rotation.y);
 
 	if (camera.rotation.x >= 89.0f)
 	{
@@ -133,6 +129,7 @@ void update(float delta)
     dir.y = sin(glm::radians(camera.rotation.x));
     dir.z = cos(glm::radians(camera.rotation.x)) * sin(glm::radians(camera.rotation.y));
 
+    dir += camera.world_position;
     camera.lookAt(dir);
 
     Mouse::update();

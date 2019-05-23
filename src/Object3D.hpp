@@ -15,6 +15,8 @@ public:
 	glm::mat4 getMatrix();
 	glm::mat4 accumulateMatrices();
 
+    void decompose();
+
 	void addChild(Object3D&);
 	void setParent(Object3D&);
 
@@ -26,6 +28,11 @@ public:
 	glm::vec3 position;
 	glm::vec3 rotation;
 	glm::vec3 scale;
+
+    glm::vec3 world_position;
+    glm::vec3 world_rotation;
+    glm::vec3 world_scale;
+    glm::quat world_quaternion;
 
 protected: 
 	glm::mat4 matrix;

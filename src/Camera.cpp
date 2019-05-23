@@ -35,14 +35,13 @@ void Camera::lookAt(glm::vec3& v)
 
 void Camera::update()
 {
-    printf("wrong\n");
 	matrix = glm::lookAt(position, target, up);
 }
 
 void Camera::update(Object3D& parent)
 {
     printf("update\n");
-	matrix = parent.getMatrix() * glm::lookAt(position, getRealPos() + target, up);
+	matrix = parent.getMatrix() * glm::lookAt(world_position, target, up);
 }
 
 glm::mat4 Camera::getProjectionMatrix()
