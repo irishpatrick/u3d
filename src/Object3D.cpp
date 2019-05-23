@@ -112,7 +112,7 @@ glm::vec3 Object3D::getRealPos()
 	return position;
 }
 
-void Object3D::translateX(float amount)
+/*void Object3D::translateX(float amount)
 {
 	right = glm::normalize(glm::cross(up, direction));
 	up = glm::cross(direction, right);
@@ -123,5 +123,25 @@ void Object3D::translateX(float amount)
 void Object3D::translateZ(float amount)
 {
 	position += amount * direction;
+}*/
+
+void Object3D::translateX(float amount)
+{
+    glm::vec3 axis(1.0f, 0, 0);
+    glm::vec4 dir = glm::vec4(axis, 1.0f) * glm::toMat4(quaternion);
+    glm::vec3 dir3 = glm::vec3(dir.x, dir.y, dir.z);
+    position += amount * dir3;
+}
+
+
+void Object3D::translateZ(float amount)
+{
+    glm::vec3 axis(0, 0, 1.0f);
+    glm::vec4 dir = glm::vec4(axis, 1.0f) * glm::toMat4(quaternion);
+    glm::vec3 dir3 = glm::vec3(dir.x, dir.y, dir.z);
+
+    printf("%s -> %s\n", Util::vector_to_str(axis).c_str(), Util::vector_to_str(dir3).c_str());
+
+    position += amount * dir3;
 }
 

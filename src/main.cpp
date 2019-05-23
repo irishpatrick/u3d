@@ -108,6 +108,9 @@ void update(float delta)
 		yaw.rotation.y += 80.0f * delta;
 	}
 
+    loaded.rotation.y += 2.0f * delta;
+    loaded.translateZ(10.0f * delta);
+
 	//camera.rotation.y += sin(0.6f * delta);
 	//camera.rotation.x += cos(0.6f * delta);
 

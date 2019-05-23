@@ -40,7 +40,6 @@ void Camera::update()
 
 void Camera::update(Object3D& parent)
 {
-    printf("update\n");
 	matrix = parent.getMatrix() * glm::lookAt(world_position, target, up);
 }
 

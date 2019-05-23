@@ -9,4 +9,5 @@ public:
 	static float distance(glm::vec3&, glm::vec3&);
 	static const std::string vector_to_str(glm::vec3&);
 	static unsigned int currentTimeMillis();
+    static void to_radians(glm::vec3&);
 };

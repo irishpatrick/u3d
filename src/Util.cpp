@@ -36,3 +36,10 @@ unsigned int Util::currentTimeMillis()
 
 	return (unsigned int)ms.count();
 }
+
+void Util::to_radians(glm::vec3& v)
+{
+    v.x = glm::radians(v.x);
+    v.y = glm::radians(v.y);
+    v.z = glm::radians(v.z);
+}
