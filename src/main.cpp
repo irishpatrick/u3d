@@ -30,6 +30,8 @@ Texture crate;
 Mesh loaded;
 Mesh test;
 
+Mesh one, two, three, four;
+
 void init()
 {
 	ctx.init();
@@ -37,9 +39,28 @@ void init()
 
 	loaded = Assets::loadMesh("assets/cube.obj");
 	test = Assets::loadMesh("assets/cube.obj");
+
+    one = Assets::loadMesh("assets/cube.obj");
+    two = Assets::loadMesh("assets/cube.obj");
+    three = Assets::loadMesh("assets/cube.obj");
+    four = Assets::loadMesh("assets/cube.obj");
 	
 	loaded.generate();
 	test.generate();
+
+    one.generate();
+    two.generate();
+    three.generate();
+    four.generate();
+
+    one.rotation.y = 0;
+    two.rotation.y = M_PI;
+    three.rotation.y = M_PI / 2.0f;
+    four.rotation.y = -M_PI / 2.0f;
+
+    two.position.x = 2;
+    three.position.x = 4;
+    four.position.x = 6;
 
 	test.position.x = 4;
 
@@ -111,7 +132,7 @@ void update(float delta)
     //loaded.rotation.y = M_PI / 2.0f;
     loaded.rotation.y -= 24.0f * delta;
     
-    loaded.translateZ(2.0f * delta);
+    //loaded.translateZ(2.0f * delta);
 
 	//camera.rotation.y += sin(0.6f * delta);
 	//camera.rotation.x += cos(0.6f * delta);
@@ -129,13 +150,20 @@ void update(float delta)
 		camera.rotation.x = -89.0f;
 	}
 
-    camera.lookAt(test);
+    four.translateZ(2.0f * delta);
+
+    camera.lookAt(four);
 
     Mouse::update();
 	//yaw.update();
     camera.update();
-	loaded.update();
-    test.update();
+	//loaded.update();
+    //test.update();
+
+    one.update();
+    two.update();
+    three.update();
+    four.update();
 }
 
 void draw()
@@ -145,9 +173,9 @@ void draw()
 	shader.attach();
 	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
 	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
-	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &loaded.getMatrix()[0][0]);
+	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &one.getMatrix()[0][0]);
 	glUniform1i(has_tex_loc, 1);
-	loaded.draw();
+	one.draw();
 	shader.detach();
 
 	glActiveTexture(GL_TEXTURE0);
@@ -155,9 +183,29 @@ void draw()
 	shader.attach();
 	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
 	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
-	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &test.getMatrix()[0][0]);
+	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &two.getMatrix()[0][0]);
 	glUniform1i(has_tex_loc, 1);
-	test.draw();
+	two.draw();
+	shader.detach();
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, crate.getId());
+	shader.attach();
+	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
+	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
+	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &three.getMatrix()[0][0]);
+	glUniform1i(has_tex_loc, 1);
+	three.draw();
+	shader.detach();
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, crate.getId());
+	shader.attach();
+	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
+	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
+	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &four.getMatrix()[0][0]);
+	glUniform1i(has_tex_loc, 1);
+	four.draw();
 	shader.detach();
 }
 

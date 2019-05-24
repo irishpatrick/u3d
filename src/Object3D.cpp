@@ -27,6 +27,8 @@ void Object3D::update()
 	direction.z = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y) - (float)M_PI / 2.0f);
 	direction = glm::normalize(direction);
 
+    printf("%s\n", Util::vector_to_str(rotation).c_str());
+
     updateQuaternion();
 
     glm::mat4 t = glm::translate(glm::mat4(1.0f), position);
@@ -40,7 +42,7 @@ void Object3D::update()
 		e->update(*this);
 	}
 
-    decompose();
+    //decompose();
 }
 
 void Object3D::update(Object3D& parent)
@@ -128,7 +130,10 @@ void Object3D::translateZ(float amount)
 
 void Object3D::updateQuaternion()
 {
-    quaternion = glm::quat(Util::to_radians(rotation));
+    glm::vec3 r3 = Util::to_radians(rotation);
+    //r3.y += M_PI / 1.0f;
+    //r3.y *= -1.0f;
+    quaternion = glm::quat(r3);
 }
 
 
