@@ -7,6 +7,7 @@
 Texture::Texture()
 {
 	id = 0;
+    ready = false;
 }
 
 Texture::~Texture()
@@ -16,6 +17,7 @@ Texture::~Texture()
 
 void Texture::load(const std::string& fn)
 {
+    ready = false;
 	printf("load texture %s\n", fn.c_str());
 
 	SDL_Surface* surface = IMG_Load(fn.c_str());
@@ -38,6 +40,8 @@ void Texture::load(const std::string& fn)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glGenerateMipmap(GL_TEXTURE_2D);
+
+    ready = true;
 }
 
 GLuint Texture::getId()

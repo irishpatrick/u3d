@@ -67,7 +67,7 @@ void processMesh(Mesh& mesh, aiMesh* amesh, const aiScene* scene)
 Mesh Assets::loadMesh(const std::string& fn)
 {
 	Mesh out;
-
+    out.ready = false;
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(fn, aiProcess_Triangulate | aiProcess_FlipUVs);
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -77,6 +77,7 @@ Mesh Assets::loadMesh(const std::string& fn)
 	}
 
 	processNode(out, scene->mRootNode, scene);
+    out.ready = true;
 	return out;
 }
 

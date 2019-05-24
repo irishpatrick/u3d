@@ -12,6 +12,8 @@ public:
 	void load(const std::string&);
 	GLuint getId();
 
+    bool ready;
+
 private:
 	GLuint id;
 };

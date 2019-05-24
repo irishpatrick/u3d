@@ -1,5 +1,7 @@
 #pragma once
 
+#include "gl_includes.hpp"
+#include "Texture.hpp"
 #include "Shader.hpp"
 
 #define MAT_TEXTURE 0
@@ -17,10 +19,14 @@ public:
 	~Material();
 
 	void create(int, int);
+    void setShader(Shader&);
+    void setTexture(Texture&);
 	void use();
 
 private:
 	int type;
 	int shading;
-	Shader* shader;
+    Shader* shader;
+    Texture* texture;
+    glm::vec3 color;
 };

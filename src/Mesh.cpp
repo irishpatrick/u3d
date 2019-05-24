@@ -11,6 +11,8 @@ Mesh::Mesh() : Object3D()
 	tbo = 0;
 	ibo = 0;
 	triangles = 0;
+    ready = true;
+    material = nullptr;
 }
 
 Mesh::~Mesh()
@@ -52,8 +54,17 @@ void Mesh::generate()
 	printf("\n");
 }
 
+void Mesh::setMaterial(Material& m)
+{
+    material = &m;
+}
+
 void Mesh::draw()
 {
+    if (material != nullptr)
+    {
+        material->use();
+    }
 	glBindVertexArray(vao);
 
 	if (vertices.size() > 0)
