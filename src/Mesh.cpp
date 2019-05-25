@@ -59,6 +59,11 @@ void Mesh::setMaterial(Material& m)
     material = &m;
 }
 
+void Mesh::copyMaterial(Material& m)
+{
+
+}
+
 void Mesh::draw()
 {
     if (material != nullptr)

@@ -31,6 +31,8 @@ void Material::setTexture(Texture& t)
 
 void Material::use()
 {
+    shader->attach();
+
     if (type == MAT_TEXTURE)
     {
 
@@ -39,4 +41,6 @@ void Material::use()
     {
 
     }
+
+    shader->detach();
 }

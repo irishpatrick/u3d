@@ -2,6 +2,7 @@
 #include "gl_includes.hpp"
 #include <cmath>
 #include "Mesh.hpp"
+#include "Material.hpp"
 #include "Context.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
@@ -16,6 +17,8 @@ int running = 1;
 Context ctx;
 
 Shader shader;
+
+Material uv_cube;
 
 Camera camera;
 Object3D yaw;
@@ -37,13 +40,19 @@ void init()
 	ctx.init();
 	Mouse::attach(ctx.window);
 
-	loaded = Assets::loadMesh("assets/cube.obj");
-	test = Assets::loadMesh("assets/cube.obj");
+    uv_cube.create(MAT_TEXTURE, MAT_FLAT);
+    uv_cube.setShader(shader);
+    uv_cube.setTexture(texture);
 
     one = Assets::loadMesh("assets/cube.obj");
     two = Assets::loadMesh("assets/cube.obj");
     three = Assets::loadMesh("assets/cube.obj");
     four = Assets::loadMesh("assets/cube.obj");
+
+    one.setMaterial(uv_cube);
+    two.setMaterial(uv_cube);
+    three.setMaterial(uv_cube);
+    four.setMaterial(uv_cube);
 	
 	loaded.generate();
 	test.generate();
