@@ -55,7 +55,7 @@ void init()
 
     one.rotation.y = 0;
 	two.rotation.y = 180;
-    three.rotation.y = 90;
+    three.rotation.y = 45;
     four.rotation.y = -90;
 
     two.position.x = 2;
@@ -149,9 +149,10 @@ void update(float delta)
 		camera.rotation.x = -89.0f;
 	}
 
-    two.translateZ(2.0f * delta);
+    three.translateZ(2.0f * delta);
+    three.rotation.y += 30.0f * delta;
 
-    camera.lookAt(two);
+    camera.lookAt(three);
 
     Mouse::update();
 	//yaw.update();

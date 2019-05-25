@@ -129,8 +129,6 @@ void Object3D::translateZ(float amount)
 void Object3D::updateQuaternion()
 {
     glm::vec3 r3 = Util::to_radians(rotation);
-    //r3.y += M_PI / 1.0f;
-    //r3.y *= -1.0f;
     quaternion = glm::quat(r3);
 }
 
@@ -139,7 +137,8 @@ void Object3D::translateX(float amount)
 {
     updateQuaternion();
     glm::vec3 axis(1.0f, 0, 0);
-    glm::vec4 dir = glm::vec4(axis, 0.0f) * glm::toMat4(quaternion);
+    glm::vec4 dir = glm::vec4(axis, 1.0f);
+    glm::toMat4(quaternion);
     glm::vec3 dir3 = glm::vec3(dir.x, dir.y, dir.z);
     position += amount * dir3;
 }
@@ -149,11 +148,11 @@ void Object3D::translateZ(float amount)
 {
     updateQuaternion();
     glm::vec3 axis(0, 0, 1.0f);
-    glm::vec4 dir = glm::vec4(axis, 0.0f) * glm::toMat4(quaternion);
-    glm::vec3 dir3 = glm::vec3(dir.x, dir.y, dir.z);
+
+    printf("%f\n", rotation.y);
 
     //printf("%s -> %s\n", Util::vector_to_str(axis).c_str(), Util::vector_to_str(dir3).c_str());
 
-    position += amount * dir3;
+    position += amount * (quaternion * axis);
 }
 
