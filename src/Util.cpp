@@ -43,7 +43,6 @@ glm::vec3 Util::to_radians(glm::vec3& v)
     r.x = glm::radians(v.x);
     r.y = glm::radians(v.y);
     r.z = glm::radians(v.z);
-
     return r;
 }
 
@@ -53,4 +52,5 @@ glm::vec3 Util::to_degrees(glm::vec3& v)
     d.x = glm::degrees(v.x);
     d.y = glm::degrees(v.y);
     d.z = glm::degrees(v.z);
+	return d;
 }

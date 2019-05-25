@@ -54,14 +54,13 @@ void init()
     four.generate();
 
     one.rotation.y = 0;
-    two.rotation.y = M_PI;
-    three.rotation.y = M_PI / 2.0f;
-    four.rotation.y = -M_PI / 2.0f;
+	two.rotation.y = 180;
+    three.rotation.y = 90;
+    four.rotation.y = -90;
 
     two.position.x = 2;
     three.position.x = 4;
     four.position.x = 6;
-
 	test.position.x = 4;
 
 	//loaded.addChild(test);
@@ -150,15 +149,16 @@ void update(float delta)
 		camera.rotation.x = -89.0f;
 	}
 
-    four.translateZ(2.0f * delta);
+    two.translateZ(2.0f * delta);
 
-    camera.lookAt(four);
+    camera.lookAt(two);
 
     Mouse::update();
 	//yaw.update();
     camera.update();
 	//loaded.update();
     //test.update();
+
 
     one.update();
     two.update();

@@ -1,6 +1,4 @@
 #include "Object3D.hpp"
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
 #include "Util.hpp"
 
 Object3D::Object3D()
@@ -22,51 +20,51 @@ Object3D::~Object3D()
 
 void Object3D::update()
 {
-	direction.x = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y) - (float)M_PI / 2.0f);
-	direction.y = sin(glm::radians(rotation.x));
-	direction.z = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y) - (float)M_PI / 2.0f);
-	direction = glm::normalize(direction);
+    direction.x = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y) - (float)M_PI / 2.0f);
+    direction.y = sin(glm::radians(rotation.x));
+    direction.z = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y) - (float)M_PI / 2.0f);
+    direction = glm::normalize(direction);
 
-    printf("%s\n", Util::vector_to_str(rotation).c_str());
+    //printf("%s\n", Util::vector_to_str(rotation).c_str());
 
     updateQuaternion();
 
     glm::mat4 t = glm::translate(glm::mat4(1.0f), position);
-	glm::mat4 r = glm::toMat4(quaternion);
-	glm::mat4 s = glm::scale(scale);
+    glm::mat4 r = glm::toMat4(quaternion);
+    glm::mat4 s = glm::scale(scale);
 
-	matrix = t * r * s;
+    matrix = t * r * s;
 
-	for (auto& e : children)
-	{
-		e->update(*this);
-	}
+    for (auto& e : children)
+    {
+    	e->update(*this);
+    }
 
-    //decompose();
+    decompose();
 }
 
 void Object3D::update(Object3D& parent)
 {
-	direction.x = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y) - (float)M_PI / 2.0f);
-	direction.y = sin(glm::radians(rotation.x));
-	direction.z = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y) - (float)M_PI / 2.0f);
-	direction = glm::normalize(direction);
+    direction.x = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y) - (float)M_PI / 2.0f);
+    direction.y = sin(glm::radians(rotation.x));
+    direction.z = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y) - (float)M_PI / 2.0f);
+    direction = glm::normalize(direction);
 
     glm::mat4 t = glm::translate(glm::mat4(1.0f), position);
 
     updateQuaternion();
     glm::mat4 r = glm::toMat4(quaternion);
 
-	glm::mat4 s = glm::scale(scale);
+    glm::mat4 s = glm::scale(scale);
 
-	matrix = parent.getMatrix() * t * r * s;
+    matrix = parent.getMatrix() * t * r * s;
     
     decompose();
 
-	for (auto& e : children)
-	{
-		e->update(*this);
-	}
+    for (auto& e : children)
+    {
+    	e->update(*this);
+    }
 }
 
 void Object3D::decompose()
@@ -141,7 +139,7 @@ void Object3D::translateX(float amount)
 {
     updateQuaternion();
     glm::vec3 axis(1.0f, 0, 0);
-    glm::vec4 dir = glm::vec4(axis, 1.0f) * glm::toMat4(quaternion);
+    glm::vec4 dir = glm::vec4(axis, 0.0f) * glm::toMat4(quaternion);
     glm::vec3 dir3 = glm::vec3(dir.x, dir.y, dir.z);
     position += amount * dir3;
 }
@@ -151,10 +149,10 @@ void Object3D::translateZ(float amount)
 {
     updateQuaternion();
     glm::vec3 axis(0, 0, 1.0f);
-    glm::vec4 dir = glm::vec4(axis, 1.0f) * glm::toMat4(quaternion);
+    glm::vec4 dir = glm::vec4(axis, 0.0f) * glm::toMat4(quaternion);
     glm::vec3 dir3 = glm::vec3(dir.x, dir.y, dir.z);
 
-    printf("%s -> %s\n", Util::vector_to_str(axis).c_str(), Util::vector_to_str(dir3).c_str());
+    //printf("%s -> %s\n", Util::vector_to_str(axis).c_str(), Util::vector_to_str(dir3).c_str());
 
     position += amount * dir3;
 }
