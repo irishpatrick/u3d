@@ -42,7 +42,7 @@ void init()
 
     uv_cube.create(MAT_TEXTURE, MAT_FLAT);
     uv_cube.setShader(shader);
-    uv_cube.setTexture(texture);
+    uv_cube.setTexture(crate);
 
     one = Assets::loadMesh("assets/cube.obj");
     two = Assets::loadMesh("assets/cube.obj");
@@ -155,7 +155,8 @@ void update(float delta)
 
 	if (camera.rotation.x < -89.0f)
 	{
-		camera.rotation.x = -89.0f;
+		camera.rotation.x = -89.0f;dd_subdirectory(./engine)
+a
 	}
 
     three.translateZ(2.0f * delta);

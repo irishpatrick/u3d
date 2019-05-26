@@ -82,3 +82,26 @@ GLuint Shader::getUniform(const std::string& name)
 	glUseProgram(0);
 	return loc;
 }
+
+void Shader::fillUniforms()
+{
+    view_loc = shader.getUniform("view");
+    proj_loc = shader.getUniform("projection");
+    model_loc = shader.getUniform("model");
+    has_tex_loc = shader.getUniform("has_texture");
+}
+
+void Shader::setViewMat(glm::mat4& v)
+{
+    view = &v;
+}
+
+void Shader::setProjMat(glm::mat4& p)
+{
+    proj = &p;
+}
+
+void Shader::setModelMat(glm::mat4& m)
+{
+    model = &m;
+}
