@@ -2,6 +2,7 @@
 
 #include "gl_includes.hpp"
 #include <string>
+#include <map>
 
 class Shader
 {
@@ -15,11 +16,13 @@ public:
 	void detach();
 	GLuint getUniform(const std::string&);
 
-    void locateUniforms();
-    void fillUniforms();
-
     template <typename T>
-    void setUniform(GLuint, T&);
+    void setUniform(const std::string&, T&);
 
 	GLuint pid;
+
+private:
+	std::map<std::string, GLuint> uniform_cache;
 };
+
+#include "Shader.inl"

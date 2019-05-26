@@ -155,8 +155,7 @@ void update(float delta)
 
 	if (camera.rotation.x < -89.0f)
 	{
-		camera.rotation.x = -89.0f;dd_subdirectory(./engine)
-a
+		camera.rotation.x = -89.0f;
 	}
 
     three.translateZ(2.0f * delta);
