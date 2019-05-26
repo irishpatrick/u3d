@@ -68,7 +68,7 @@ void Mesh::draw()
 {
     if (material != nullptr)
     {
-        material->use();
+        //material->use();
     }
 	glBindVertexArray(vao);
 
