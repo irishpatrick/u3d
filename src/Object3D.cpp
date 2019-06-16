@@ -25,46 +25,28 @@ void Object3D::update()
     direction.z = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y) - (float)M_PI / 2.0f);
     direction = glm::normalize(direction);
 
-    //printf("%s\n", Util::vector_to_str(rotation).c_str());
-
     updateQuaternion();
 
     glm::mat4 t = glm::translate(glm::mat4(1.0f), position);
     glm::mat4 r = glm::toMat4(quaternion);
     glm::mat4 s = glm::scale(scale);
 
-    matrix = t * r * s;
-
-    for (auto& e : children)
+    if (parent != nullptr)
     {
-    	e->update(*this);
+        matrix = parent->accumulateMatrices() * t * r * s;
+    }
+    else
+    {
+        matrix = t * r * s;
     }
 
-    decompose();
-}
-
-void Object3D::update(Object3D& parent)
-{
-    direction.x = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y) - (float)M_PI / 2.0f);
-    direction.y = sin(glm::radians(rotation.x));
-    direction.z = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y) - (float)M_PI / 2.0f);
-    direction = glm::normalize(direction);
-
-    glm::mat4 t = glm::translate(glm::mat4(1.0f), position);
-
-    updateQuaternion();
-    glm::mat4 r = glm::toMat4(quaternion);
-
-    glm::mat4 s = glm::scale(scale);
-
-    matrix = parent.getMatrix() * t * r * s;
-    
     decompose();
 
     for (auto& e : children)
     {
-    	e->update(*this);
+    	e->update();
     }
+
 }
 
 void Object3D::decompose()
@@ -86,7 +68,7 @@ glm::mat4 Object3D::accumulateMatrices()
 {
 	if (parent != nullptr)
 	{
-		return parent->accumulateMatrices()* matrix;
+		return parent->accumulateMatrices() * matrix;
 	}
 	return matrix;
 }
@@ -99,7 +81,10 @@ void Object3D::addChild(Object3D& obj)
 
 void Object3D::setParent(Object3D& obj)
 {
+    // assign parent
 	parent = &obj;
+
+    // make position relative to object
 	position = position - obj.position;
 	rotation = rotation - obj.rotation;
 }
@@ -148,10 +133,6 @@ void Object3D::translateZ(float amount)
 {
     updateQuaternion();
     glm::vec3 axis(0, 0, 1.0f);
-
-    printf("%f\n", rotation.y);
-
-    //printf("%s -> %s\n", Util::vector_to_str(axis).c_str(), Util::vector_to_str(dir3).c_str());
 
     position += amount * (quaternion * axis);
 }

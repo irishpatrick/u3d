@@ -50,8 +50,6 @@ void Mesh::generate()
 		glBindBuffer(GL_ARRAY_BUFFER, nbo);
 		glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(GLfloat), &normals[0], GL_STATIC_DRAW);
 	}
-
-	printf("\n");
 }
 
 void Mesh::setMaterial(Material& m)

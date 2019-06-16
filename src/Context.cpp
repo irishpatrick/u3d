@@ -18,6 +18,12 @@ void Context::init()
 		fprintf(stderr, "init failed\n");
 	}
 
+    const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+    glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+    glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+    glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+    glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 	glfwWindowHint(GLFW_SAMPLES, 16);
 	glfwWindowHint(GLFW_REFRESH_RATE, GLFW_DONT_CARE);
 	glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
@@ -26,7 +32,7 @@ void Context::init()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // We don't want the old OpenGL 
 
-	window = glfwCreateWindow(1280, 720, "title", NULL, NULL);
+	window = glfwCreateWindow(mode->width, mode->height, "title", glfwGetPrimaryMonitor(), NULL);
 	if (window == NULL)
 	{
 		fprintf(stderr, "window error\n");
@@ -35,7 +41,7 @@ void Context::init()
 	}
 
 	glfwMakeContextCurrent(window);
-	//glfwSwapInterval(0);
+	glfwSwapInterval(0);
 
 	glewExperimental = true;
 	if (glewInit() != GLEW_OK)

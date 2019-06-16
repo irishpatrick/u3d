@@ -23,8 +23,15 @@ void Camera::setup(float fov, float aspect, float near, float far)
 void Camera::lookAt(Object3D& obj)
 {
 	target = obj.getRealPos();
-	direction = glm::normalize(position - target);
-	right = glm::normalize(glm::cross(up, direction));
+    if (parent == nullptr)
+    {
+        direction = glm::normalize(position - target);
+    }
+    else
+    {
+        direction = glm::normalize(world_position - target);
+    }
+    right = glm::normalize(glm::cross(up, direction));
 	up = glm::cross(direction, right);
 }
 
@@ -35,7 +42,14 @@ void Camera::lookAt(glm::vec3& v)
 
 void Camera::update()
 {
-	matrix = glm::lookAt(position, target, up);
+    if (parent != nullptr)
+    {
+        matrix = glm::lookAt(world_position, target, up);
+    }
+    else
+    {
+        matrix = glm::lookAt(position, target, up);
+    }
 }
 
 void Camera::update(Object3D& parent)

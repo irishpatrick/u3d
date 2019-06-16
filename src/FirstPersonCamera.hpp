@@ -6,15 +6,18 @@
 class FirstPersonCamera : public Object3D
 {
 public:
-	FirstPersonCamera();
-	~FirstPersonCamera();
-	void setup(float, float, float, float);
-	void update();
+    FirstPersonCamera();
+    ~FirstPersonCamera();
+
+    void setup(float, float, float, float);
+    void lookAt(Object3D&);
+    void update();
+
+    glm::mat4 getProjectionMatrix();
     glm::mat4 getMatrix();
-    glm::mat4 getViewMatrix();
-	glm::mat4 getProjectionMatrix();
+
+    Camera camera;
 
 private:
-    Object3D yaw;
-	Camera camera;
+    
 };

@@ -1,6 +1,7 @@
 #include <cstdio>
 #include "gl_includes.hpp"
 #include <cmath>
+#include <iostream>
 #include "Mesh.hpp"
 #include "Material.hpp"
 #include "Context.hpp"
@@ -21,7 +22,7 @@ Shader shader;
 Material uv_cube;
 
 Camera camera;
-Object3D yaw;
+//FirstPersonCamera camera;
 
 GLuint model_loc;
 GLuint view_loc;
@@ -80,7 +81,7 @@ void init()
 
 	camera.setup(70.0f, 16.0f / 9.0f, 0.1f, 100.0f);
     camera.position.z = -7;
-    camera.position.y = 2;
+    camera.position.y = -2;
 
 	view_loc = shader.getUniform("view");
 	projection_loc = shader.getUniform("projection");
@@ -109,32 +110,32 @@ void update(float delta)
 
 	if (w)
 	{
-		yaw.translateZ(10.0f * delta);
+		//yaw.translateZ(10.0f * delta);
 	}
 
 	if (s)
 	{
-		yaw.translateZ(-10.0f * delta);
+		//yaw.translateZ(-10.0f * delta);
 	}
 
 	if (a)
 	{
-		yaw.translateX(10.0f * delta);
+		//yaw.translateX(10.0f * delta);
 	}
 
 	if (d)
 	{
-		yaw.translateX(-10.0f * delta);
+		//yaw.translateX(-10.0f * delta);
 	}
 
 	if (q)
 	{
-		yaw.rotation.y -= 80.0f * delta;
+		//yaw.rotation.y -= 80.0f * delta;
 	}
 
 	if (e)
 	{
-		yaw.rotation.y += 80.0f * delta;
+		//yaw.rotation.y += 80.0f * delta;
 	}
 
     //loaded.rotation.y = M_PI / 2.0f;
@@ -174,6 +175,8 @@ void update(float delta)
     two.update();
     three.update();
     four.update();
+
+    //printf("pos=%s\twpos=%s\n", Util::vector_to_str(camera.camera.position).c_str(), Util::vector_to_str(camera.camera.world_position).c_str());
 }
 
 void draw()
@@ -221,7 +224,30 @@ void draw()
 
 int main(int argc, char* argv[])
 {
-	printf("hello world!\n");
+    // tests
+    Object3D a;
+    Object3D b;
+
+    a.position = glm::vec3(0, 0, 0);
+    b.position = glm::vec3(1, 0, 0);
+    a.addChild(b);
+
+    a.update();
+    
+    std::cout << Util::vector_to_str(b.getRealPos()) << std::endl;
+
+    //a.position = glm::vec3(4, 4, 4);
+    a.update();
+
+    std::cout << Util::vector_to_str(b.getRealPos()) << std::endl;
+
+    a.rotation.y = 90;
+    a.update();
+
+    std::cout << Util::vector_to_str(b.getRealPos()) << std::endl;
+
+     // main game
+	/*printf("hello world!\n");
 
 	init();
 
@@ -242,5 +268,5 @@ int main(int argc, char* argv[])
 		ctx.poll();
 
 		then = now;
-	}
+	}*/
 }
