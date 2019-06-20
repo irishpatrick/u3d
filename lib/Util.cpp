@@ -22,7 +22,7 @@ float Util::distance(glm::vec3& a, glm::vec3& b)
 	return sqrtf(powf(b.x - a.x, 2) + powf(b.y - a.y, 2) + powf(b.z - a.z, 2));
 }
 
-const std::string Util::vector_to_str(glm::vec3& v)
+const std::string Util::vector_to_str(glm::vec3 v)
 {
 	std::stringstream ss;
 	ss << "<" << v.x << "," << v.y << "," << v.z << ">";
