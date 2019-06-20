@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(game)
+project(u3d)
 
 if (MSVC)
 
@@ -13,7 +13,8 @@ find_library(ASSIMP_LIB assimp-vc140-mtd REQUIRED)
 find_library(GL_LIB opengl32 REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(sdl2-image CONFIG REQUIRED)
-set(LIB 
+find_package(Catch2 CONFIG REQUIRED)
+set(libs
 	GLEW::GLEW 
 	glm
 	glfw
@@ -22,12 +23,13 @@ set(LIB
 	SDL2::SDL2main
 	SDL2::SDL2_image
 	${ASSIMP_LIB}
+	Catch2::Catch2
 )
 
 if (MSVC)
-set(COMPILE_OPTS /DEBUG /std:c++latest /W3 /WX /MP /sdl /Od)
+set(cflags /DEBUG /std:c++latest /W3 /WX /MP /sdl /Od)
 else (MSVC)
-set(COMPILE_OPTS -g -std=c++11 -Wall -Werror)
+set(cflags -g -std=c++11 -Wall -Werror)
 endif (MSVC)
 
 else(MSVC)
@@ -41,7 +43,7 @@ pkg_check_modules(GLM REQUIRED glm)
 pkg_check_modules(ASSIMP REQUIRED assimp)
 
 set(
-    I_DIR 
+    incl
     ${ASSIMP_INCLUDE_DIRS}
     ${SDL2_INCLUDE_DIRS} 
     ${SDL2_IMAGE_INCLUDE_DIRS} 
@@ -49,24 +51,18 @@ set(
     ${GLM_INCLUDE_DIRS}
 )
 set(
-    L_DIR 
+    ldir
     ${ASSIMP_LIBRARY_DIRS}
     ${SDL2_LIBRARY_DIRS} 
     ${SDL2_IMAGE_LIBRARY_DIRS} 
     ${GLEW_LIBRARY_DIRS}
     ${GLFW_LIBRARY_DIRS}
 )
-set(LIB SDL2 SDL2_image GL GLEW assimp glfw)
-set(COMPILE_OPTS -g -std=c++11)
+set(libs SDL2 SDL2_image GL GLEW assimp glfw)
+set(cflags -g -std=c++11)
 
 endif(MSVC)
 
-file(GLOB sources src/*)
-file(GLOB assets assets/*)
-
-add_executable(${PROJECT_NAME} ${sources})
-
-target_compile_options(${PROJECT_NAME} PRIVATE ${COMPILE_OPTS})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${LIB})
-
-file(COPY ${assets} DESTINATION ./assets)
+add_subdirectory(./lib)
+add_subdirectory(./game)
+add_subdirectory(./tests)
