@@ -1,18 +1,7 @@
 #include <cstdio>
-#include "gl_includes.hpp"
+#include <u3d.hpp>
 #include <cmath>
 #include <iostream>
-#include "Mesh.hpp"
-#include "Material.hpp"
-#include "Context.hpp"
-#include "Shader.hpp"
-#include "Camera.hpp"
-#include "Texture.hpp"
-#include "Util.hpp"
-#include "Assets.hpp"
-#include "FirstPersonCamera.hpp"
-#include "Mouse.hpp"
-
 int running = 1;
 
 Context ctx;
