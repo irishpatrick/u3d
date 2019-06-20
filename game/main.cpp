@@ -236,7 +236,7 @@ int main(int argc, char* argv[])
     std::cout << Util::vector_to_str(b.getRealPos()) << std::endl;
 
      // main game
-	/*printf("hello world!\n");
+	printf("hello world!\n");
 
 	init();
 
@@ -257,5 +257,5 @@ int main(int argc, char* argv[])
 		ctx.poll();
 
 		then = now;
-	}*/
+	}
 }

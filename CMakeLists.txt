@@ -63,6 +63,6 @@ set(cflags -g -std=c++11)
 
 endif(MSVC)
 
-add_subdirectory(./lib)
-add_subdirectory(./game)
-add_subdirectory(./tests)
+add_subdirectory(${CMAKE_SOURCE_DIR}/lib)
+add_subdirectory(${CMAKE_SOURCE_DIR}/game)
+add_subdirectory(${CMAKE_SOURCE_DIR}/tests)
