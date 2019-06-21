@@ -12,12 +12,13 @@ public:
 	void setup(float, float, float, float);
 	void lookAt(Object3D&);
     void lookAt(glm::vec3&);
-	void update();
-	void update(Object3D&);
+    void update() override;
 	glm::mat4 getProjectionMatrix();
 
 	glm::vec3 target;
 
 protected:
 	glm::mat4 projection;
+    glm::vec3 front;
+    glm::vec3 right;
 };

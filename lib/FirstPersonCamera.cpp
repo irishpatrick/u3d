@@ -25,6 +25,26 @@ void FirstPersonCamera::lookAt(Object3D& obj)
     updateQuaternion();
 }
 
+void FirstPersonCamera::pitch(float amt)
+{
+    camera.rotation.x = amt;
+}
+
+void FirstPersonCamera::yaw(float amt)
+{
+    rotation.y = amt;
+}
+
+void FirstPersonCamera::pitchRate(float rate)
+{
+    camera.rotation.x += rate;
+}
+
+void FirstPersonCamera::yawRate(float rate)
+{
+    rotation.y += rate;
+}
+
 void FirstPersonCamera::update()
 {
     Object3D::update();

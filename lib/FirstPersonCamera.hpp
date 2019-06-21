@@ -13,11 +13,15 @@ public:
     void lookAt(Object3D&);
     void update();
 
+    void pitch(float);
+    void yaw(float);
+    void pitchRate(float);
+    void yawRate(float);
+
     glm::mat4 getProjectionMatrix();
     glm::mat4 getMatrix();
 
     Camera camera;
 
 private:
-    
 };
