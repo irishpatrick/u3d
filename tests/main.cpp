@@ -1,5 +1,13 @@
 #define CATCH_CONFIG_MAIN
+
+#ifdef _WIN32
 #include <catch.hpp>
+#endif
+
+#ifdef __unix__
+#include <catch2/catch.hpp>
+#endif
+
 #include <u3d.hpp>
 #include <iostream>
 #include <cmath>

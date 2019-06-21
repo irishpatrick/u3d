@@ -19,6 +19,8 @@ build/
 *.ko
 *.obj
 !assets/*.obj
+!game/assets/*.obj
+!tests/assets/*.obj
 *.elf
 
 # Linker output
