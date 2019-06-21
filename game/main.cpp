@@ -10,8 +10,8 @@ Shader shader;
 
 Material uv_cube;
 
-//Camera camera;
-FirstPersonCamera camera;
+Camera camera;
+//FirstPersonCamera camera;
 
 GLuint model_loc;
 GLuint view_loc;
@@ -69,8 +69,9 @@ void init()
 	shader.createShader("assets/vertex.glsl", "assets/fragment.glsl");
 
 	camera.setup(70.0f, 16.0f / 9.0f, 0.1f, 100.0f);
-    camera.position.z = 7;
+    camera.position.z = -7;
     camera.position.y = 0;
+    camera.rotation.z = 20;
 
 	view_loc = shader.getUniform("view");
 	projection_loc = shader.getUniform("projection");
@@ -119,12 +120,14 @@ void update(float delta)
 
 	if (q)
 	{
-        camera.pitchRate(-0.7f);
+        //camera.pitchRate(-0.7f);
+        //camera.rotation.y -= 1;
 	}
 	else if (e)
 	{
-        camera.pitchRate(0.7f);
-	}
+        //camera.pitchRate(0.7f);
+        //camera.rotation.y += 1;
+    }
     else
     {
     }
@@ -139,8 +142,8 @@ void update(float delta)
 	//camera.rotation.y += sin(0.6f * delta);
 	//camera.rotation.x += cos(0.6f * delta);
 
-	//yaw.rotation.y += 60 * Mouse::x;
-	//camera.rotation.x += 60 * Mouse::y;
+	camera.rotation.y -= 60 * Mouse::x;
+	camera.rotation.x += 60 * Mouse::y;
 
 	if (camera.rotation.x >= 89.0f)
 	{
@@ -155,7 +158,7 @@ void update(float delta)
     three.translateZ(2.0f * delta);
     three.rotation.y += 30.0f * delta;
 
-    camera.lookAt(three);
+    //camera.lookAt(three);
 
     Mouse::update();
 	//yaw.update();

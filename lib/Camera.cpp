@@ -46,14 +46,13 @@ void Camera::lookAt(glm::vec3& v)
 void Camera::update()
 {
     //std::cout << rotation.x << ',' << rotation.y << ',' << rotation.z << std::endl;
-    front.z = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
-    front.y = sin(glm::radians(rotation.x));
     front.x = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y));
+    front.y = sin(glm::radians(rotation.x));
+    front.z = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
     front = glm::normalize(front);
 
     right = glm::normalize(glm::cross(up, front));
-
-    //std::cout << Util::vector_to_str(front) << std::endl;
+    //up = glm::cross(front, right);
 
     if (parent != nullptr)
     {
@@ -61,19 +60,21 @@ void Camera::update()
     }
     else
     {
-        matrix = glm::lookAt(position, target, up);
+        matrix = glm::lookAt(position, position + front, up);
     }
+}
 
-    //decompose();
+void Camera::translateX(float amount)
+{
+    position += amount * right;
+}
 
-    Util::print_vec3(position);
-    std::cout << "\n";
-    Util::print_vec3(world_position);
-
-    for (auto& e : children)
-    {
-        e->update();
-    }
+void Camera::translateZ(float amount)
+{
+    glm::vec3 front_flat = front;
+    front_flat.y = 0;
+    front_flat = glm::normalize(front_flat);
+    position += amount * front_flat;
 }
 
 glm::mat4 Camera::getProjectionMatrix()

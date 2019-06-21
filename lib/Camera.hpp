@@ -13,6 +13,8 @@ public:
 	void lookAt(Object3D&);
     void lookAt(glm::vec3&);
     void update() override;
+    void translateX(float);
+    void translateZ(float);
 	glm::mat4 getProjectionMatrix();
 
 	glm::vec3 target;
