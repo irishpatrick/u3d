@@ -16,7 +16,7 @@ Camera camera;
 GLuint model_loc;
 GLuint view_loc;
 GLuint projection_loc;
-GLuint has_tex_loc;
+GLuint color_src_loc;
 
 Texture crate;
 
@@ -76,7 +76,7 @@ void init()
 	view_loc = shader.getUniform("view");
 	projection_loc = shader.getUniform("projection");
 	model_loc = shader.getUniform("model");
-	has_tex_loc = shader.getUniform("has_texture");
+	color_src_loc = shader.getUniform("color_src");
 }
 
 void update(float delta)
@@ -183,7 +183,7 @@ void draw()
 	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
 	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
 	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &one.getMatrix()[0][0]);
-	glUniform1i(has_tex_loc, 1);
+	glUniform1i(color_src_loc, 1);
 	one.draw();
 	shader.detach();
 
@@ -193,7 +193,7 @@ void draw()
 	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
 	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
 	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &two.getMatrix()[0][0]);
-	glUniform1i(has_tex_loc, 1);
+	glUniform1i(color_src_loc, 1);
 	two.draw();
 	shader.detach();
 
@@ -203,7 +203,7 @@ void draw()
 	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
 	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
 	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &three.getMatrix()[0][0]);
-	glUniform1i(has_tex_loc, 1);
+	glUniform1i(color_src_loc, 1);
 	three.draw();
 	shader.detach();
 
@@ -213,37 +213,14 @@ void draw()
 	glUniformMatrix4fv(projection_loc, 1, GL_FALSE, &camera.getProjectionMatrix()[0][0]);
 	glUniformMatrix4fv(view_loc, 1, GL_FALSE, &camera.getMatrix()[0][0]);
 	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &four.getMatrix()[0][0]);
-	glUniform1i(has_tex_loc, 1);
+	glUniform1i(color_src_loc, 1);
 	four.draw();
 	shader.detach();
 }
 
 int main(int argc, char* argv[])
 {
-    // tests
-    Object3D a;
-    Object3D b;
-
-    a.position = glm::vec3(0, 0, 0);
-    b.position = glm::vec3(1, 0, 0);
-    a.addChild(b);
-
-    a.update();
-    
-    std::cout << Util::vector_to_str(b.getRealPos()) << std::endl;
-
-    //a.position = glm::vec3(4, 4, 4);
-    a.update();
-
-    std::cout << Util::vector_to_str(b.getRealPos()) << std::endl;
-
-    a.rotation.y = 90;
-    a.update();
-
-    std::cout << Util::vector_to_str(b.getRealPos()) << std::endl;
-
-     // main game
-	printf("hello world!\n");
+    printf("hello world!\n");
 
 	init();
 

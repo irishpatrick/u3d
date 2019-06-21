@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include "gl_includes.hpp"
 #include "Texture.hpp"
 #include "Shader.hpp"
@@ -21,6 +22,7 @@ public:
 	void create(int, int);
     void setShader(Shader&);
     void setTexture(Texture&);
+    void setColor(uint8_t, uint8_t, uint8_t);
 	void use();
 
 private:
