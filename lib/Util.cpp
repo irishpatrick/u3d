@@ -1,6 +1,7 @@
 #include "Util.hpp"
 #include <chrono>
 #include <sstream>
+#include <iostream>
 
 glm::vec3 Util::ihat()
 {
@@ -27,6 +28,11 @@ const std::string Util::vector_to_str(glm::vec3 v)
 	std::stringstream ss;
 	ss << "<" << v.x << "," << v.y << "," << v.z << ">";
 	return ss.str();
+}
+
+void Util::print_vec3(glm::vec3 v)
+{
+    std::cout << "<" << v.x << "," << v.y << "," << v.z << ">" << std::endl;
 }
 
 unsigned int Util::currentTimeMillis()

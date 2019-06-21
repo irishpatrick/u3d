@@ -53,17 +53,27 @@ void Camera::update()
 
     right = glm::normalize(glm::cross(up, front));
 
-    std::cout << Util::vector_to_str(front) << std::endl;
+    //std::cout << Util::vector_to_str(front) << std::endl;
 
     if (parent != nullptr)
     {
-        matrix = parent->accumulateMatrices() * glm::lookAt(position, position + front, up);
+        matrix = parent->accumulateMatrices() * glm::lookAt(parent->world_position + position, parent->world_position + position + front, up);
     }
     else
     {
         matrix = glm::lookAt(position, target, up);
     }
-    //Object3D::update();
+
+    //decompose();
+
+    Util::print_vec3(position);
+    std::cout << "\n";
+    Util::print_vec3(world_position);
+
+    for (auto& e : children)
+    {
+        e->update();
+    }
 }
 
 glm::mat4 Camera::getProjectionMatrix()

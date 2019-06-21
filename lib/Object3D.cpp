@@ -44,7 +44,7 @@ void Object3D::update()
 
     for (auto& e : children)
     {
-    	e->update();
+        e->update();
     }
 
 }
