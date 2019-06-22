@@ -4,10 +4,15 @@
 Object3D::Object3D()
 {
 	matrix = glm::mat4(1.0f);
+
 	position = glm::vec3(0, 0, 0);
 	rotation = glm::vec3(0, 0, 0);
 	scale = glm::vec3(1, 1, 1);
-	right = glm::vec3();
+    world_position = position;
+    world_rotation = rotation;
+    world_scale = scale;
+
+    right = glm::vec3();
 	up = Util::jhat();
 	direction = glm::vec3();
 	parent = nullptr;

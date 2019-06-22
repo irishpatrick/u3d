@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "Mesh.hpp"
+#include "Camera.hpp"
 
 class Scene
 {
@@ -10,7 +11,7 @@ public:
 	~Scene();
 
 	void addMesh(Mesh&);
-	void draw();
+	void render(Camera&);
 	const std::vector<Mesh*> getMeshes();
 
 private:

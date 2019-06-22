@@ -23,10 +23,11 @@ public:
     void setShader(Shader&);
     void setTexture(Texture&);
     void setColor(uint8_t, uint8_t, uint8_t);
-	void use();
+    int getColorSrc();
+    int getShadingType();
 
 private:
-	int type;
+	int color_src;
 	int shading;
     Shader* shader;
     Texture* texture;

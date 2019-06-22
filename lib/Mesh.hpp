@@ -18,6 +18,7 @@ public:
 
     void setMaterial(Material&);
     void copyMaterial(Material&);
+    Material& getMaterial();
 
 	std::vector<GLfloat> vertices;
 	std::vector<GLfloat> normals;

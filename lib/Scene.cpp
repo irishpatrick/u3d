@@ -15,7 +15,7 @@ void Scene::addMesh(Mesh& mesh)
 	meshes.push_back(&mesh);
 }
 
-void Scene::draw()
+void Scene::render(Camera& camera)
 {
 	for (auto& e : meshes)
 	{

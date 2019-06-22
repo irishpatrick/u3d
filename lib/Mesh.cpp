@@ -62,6 +62,11 @@ void Mesh::copyMaterial(Material& m)
 
 }
 
+Material& Mesh::getMaterial()
+{
+    return *material;
+}
+
 void Mesh::draw()
 {
     if (material != nullptr)
@@ -75,12 +80,12 @@ void Mesh::draw()
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glVertexAttribPointer(
-			    0,
-		    	3,
-			    GL_FLOAT,
-			    GL_FALSE,
-			    0,
-			    (void*)0);
+		        0,
+                3,
+                GL_FLOAT,
+                GL_FALSE,
+                0,
+                (void*)0);
 	}
 
 	if (texcoords.size() > 0)

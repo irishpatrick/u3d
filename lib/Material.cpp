@@ -2,7 +2,7 @@
 
 Material::Material()
 {
-	type = -1;
+	color_src = -1;
 	shading = -1;
 	shader = nullptr;
     texture = nullptr;
@@ -16,7 +16,7 @@ Material::~Material()
 
 void Material::create(int t, int s)
 {
-	type = t;
+	color_src = t;
 	shading = s;
 }
 
@@ -38,26 +38,12 @@ void Material::setColor(uint8_t r, uint8_t g, uint8_t b)
     color = glm::normalize(color);
 }
 
-void Material::use()
+int Material::getColorSrc()
 {
-    shader->attach();
+    return color_src;
+}
 
-    if (type == MAT_TEXTURE)
-    {
-        if (texture != nullptr)
-        {
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, texture->getId());
-        }
-        else
-        {
-
-        }
-    }
-    else if (type == MAT_COLOR)
-    {
-
-    }
-
-    shader->detach();
+int Material::getShadingType()
+{
+    return shading;
 }
