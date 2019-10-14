@@ -1,5 +1,11 @@
 #include "Context.hpp"
 #include <cstdio>
+#include <iostream>
+
+void glfwErrorCallback(int, const char* err)
+{
+	std::cout << "GLFW Error: " << err << std::endl;
+}
 
 Context::Context()
 {
@@ -18,6 +24,8 @@ void Context::init()
 		fprintf(stderr, "init failed\n");
 	}
 
+	glfwSetErrorCallback(glfwErrorCallback);
+
     const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
     glfwWindowHint(GLFW_RED_BITS, mode->redBits);
@@ -27,8 +35,8 @@ void Context::init()
 	glfwWindowHint(GLFW_SAMPLES, 16);
 	glfwWindowHint(GLFW_REFRESH_RATE, GLFW_DONT_CARE);
 	glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // We don't want the old OpenGL 
 
@@ -43,11 +51,16 @@ void Context::init()
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(0);
 
-	glewExperimental = true;
+	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
 	{
 		fprintf(stderr, "glew error\n");
 		return;
+	}
+
+	if (glGenVertexArrays == NULL)
+	{
+		printf("big issues\n");
 	}
 
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);

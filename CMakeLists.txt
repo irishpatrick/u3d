@@ -4,16 +4,18 @@ project(u3d)
 
 if (MSVC)
 
-set(CMAKE_MSVCIDE_RUN_PATH "D:\\vcpkg\\installed\\x86-windows\\bin")
+message(WARNING ${MSVC_VERSION})
+
+#set(CMAKE_MSVCIDE_RUN_PATH "D:\\vcpkg\\installed\\x86-windows\\bin")
 
 find_package(GLEW REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
-find_library(ASSIMP_LIB assimp-vc140-mtd REQUIRED)
+#find_library(ASSIMP_LIB assimp REQUIRED)
+find_package(assimp CONFIG REQUIRED)
 find_library(GL_LIB opengl32 REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(sdl2-image CONFIG REQUIRED)
-find_package(Catch2 CONFIG REQUIRED)
 set(libs
 	GLEW::GLEW 
 	glm
@@ -22,8 +24,7 @@ set(libs
 	SDL2::SDL2
 	SDL2::SDL2main
 	SDL2::SDL2_image
-	${ASSIMP_LIB}
-	Catch2::Catch2
+	assimp::assimp
 )
 
 if (MSVC)
@@ -65,4 +66,3 @@ endif(MSVC)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/lib)
 add_subdirectory(${CMAKE_SOURCE_DIR}/game)
-add_subdirectory(${CMAKE_SOURCE_DIR}/tests)

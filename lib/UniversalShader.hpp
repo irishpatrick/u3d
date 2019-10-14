@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Shader.hpp"
+#include "Mesh.hpp"
+#include "Camera.hpp"
 #include "gl_includes.hpp"
 #include <string>
 

@@ -44,8 +44,8 @@ void init()
     three.setMaterial(uv_cube);
     four.setMaterial(uv_cube);
 	
-	loaded.generate();
-	test.generate();
+	//loaded.generate();
+	//test.generate();
 
     one.generate();
     two.generate();

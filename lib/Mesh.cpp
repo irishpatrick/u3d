@@ -118,7 +118,7 @@ void Mesh::draw()
 	{
 		glDrawElements(
                 GL_TRIANGLES, 
-                indices.size(), 
+                (GLsizei)indices.size(), 
                 GL_UNSIGNED_INT, 
                 &indices[0]);
 	}

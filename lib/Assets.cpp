@@ -29,6 +29,7 @@ void processNode(Mesh& mesh, aiNode* node, const aiScene* scene)
 
 void processMesh(Mesh& mesh, aiMesh* amesh, const aiScene* scene)
 {
+	printf("process mesh\n");
 	if (amesh == nullptr || scene == nullptr)
 	{
 		printf("null args\n");
