@@ -8,14 +8,17 @@ message(WARNING ${MSVC_VERSION})
 
 #set(CMAKE_MSVCIDE_RUN_PATH "D:\\vcpkg\\installed\\x86-windows\\bin")
 
+find_path(GLEW_INCL "gl/glew.h")
 find_package(GLEW REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
-#find_library(ASSIMP_LIB assimp REQUIRED)
 find_package(assimp CONFIG REQUIRED)
 find_library(GL_LIB opengl32 REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(sdl2-image CONFIG REQUIRED)
+set (incl
+    ${GLEW_INCL}
+)
 set(libs
 	GLEW::GLEW 
 	glm
@@ -66,3 +69,4 @@ endif(MSVC)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/lib)
 add_subdirectory(${CMAKE_SOURCE_DIR}/game)
+add_subdirectory(${CMAKE_SOURCE_DIR}/flightview)

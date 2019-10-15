@@ -11,7 +11,6 @@ Shader shader;
 Material uv_cube;
 
 Camera camera;
-//FirstPersonCamera camera;
 
 GLuint model_loc;
 GLuint view_loc;
@@ -61,8 +60,6 @@ void init()
     three.position.x = 4;
     four.position.x = 6;
 	test.position.x = 4;
-
-	//loaded.addChild(test);
 
 	crate.load("assets/uv2k.png");
 
@@ -118,32 +115,10 @@ void update(float delta)
 		camera.translateX(-10.0f * delta);
 	}
 
-	if (q)
-	{
-        //camera.pitchRate(-0.7f);
-        //camera.rotation.y -= 1;
-	}
-	else if (e)
-	{
-        //camera.pitchRate(0.7f);
-        //camera.rotation.y += 1;
-    }
-    else
-    {
-    }
-
-    //camera.lookAt(three);
-
-    //loaded.rotation.y = M_PI / 2.0f;
     loaded.rotation.y -= 24.0f * delta;
-    
-    //loaded.translateZ(2.0f * delta);
 
-	//camera.rotation.y += sin(0.6f * delta);
-	//camera.rotation.x += cos(0.6f * delta);
-
-	camera.rotation.y -= 60 * Mouse::x;
-	camera.rotation.x += 60 * Mouse::y;
+	//camera.rotation.y -= 60 * Mouse::x;
+	//camera.rotation.x += 60 * Mouse::y;
 
 	if (camera.rotation.x >= 89.0f)
 	{
@@ -158,7 +133,7 @@ void update(float delta)
     three.translateZ(2.0f * delta);
     three.rotation.y += 30.0f * delta;
 
-    //camera.lookAt(three);
+    camera.lookAt(three);
 
     Mouse::update();
 	//yaw.update();

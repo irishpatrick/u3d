@@ -1,5 +1,5 @@
 
-project(game)
+project(flightview)
 
 file(GLOB sources *.cpp *.hpp *.inl)
 file(GLOB assets assets/*)

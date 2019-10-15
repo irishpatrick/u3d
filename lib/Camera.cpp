@@ -28,14 +28,17 @@ void Camera::lookAt(Object3D& obj)
 	target = obj.getRealPos();
     if (parent == nullptr)
     {
-        direction = glm::normalize(position - target);
+        direction = glm::normalize(target - position);
     }
     else
     {
-        direction = glm::normalize(world_position - target);
+        direction = glm::normalize(target - world_position);
     }
     right = glm::normalize(glm::cross(up, direction));
 	up = glm::cross(direction, right);
+    target = position + direction;
+
+    matrix = glm::lookAt(position, target, up);
 }
 
 void Camera::lookAt(glm::vec3& v)
@@ -46,7 +49,7 @@ void Camera::lookAt(glm::vec3& v)
 void Camera::update()
 {
     //std::cout << rotation.x << ',' << rotation.y << ',' << rotation.z << std::endl;
-    front.x = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y));
+    /*front.x = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y));
     front.y = sin(glm::radians(rotation.x));
     front.z = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
     front = glm::normalize(front);
@@ -61,7 +64,8 @@ void Camera::update()
     else
     {
         matrix = glm::lookAt(position, position + front, up);
-    }
+    }*/
+    matrix = glm::lookAt(position, target, up);
 }
 
 void Camera::translateX(float amount)

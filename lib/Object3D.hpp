@@ -14,6 +14,7 @@ public:
 	glm::mat4 getMatrix();
 	glm::mat4 accumulateMatrices();
     void updateQuaternion();
+    void globalDecompose();
     void decompose();
 
 	void addChild(Object3D&);
