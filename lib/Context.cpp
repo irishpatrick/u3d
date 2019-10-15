@@ -41,7 +41,7 @@ void Context::init()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // We don't want the old OpenGL 
 
 	//window = glfwCreateWindow(mode->width, mode->height, "title", glfwGetPrimaryMonitor(), NULL);
-    window = glfwCreateWindow(640, 480, "title", NULL, NULL);
+    window = glfwCreateWindow(800, 600, "title", NULL, NULL);
     if (window == NULL)
 	{
 		fprintf(stderr, "window error\n");

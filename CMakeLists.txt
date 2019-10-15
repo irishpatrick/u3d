@@ -31,7 +31,7 @@ set(libs
 )
 
 if (MSVC)
-set(cflags /DEBUG /std:c++latest /W3 /WX /MP /sdl /Od)
+set(cflags /DEBUG /std:c++latest /W3 /WX /sdl /Od)
 else (MSVC)
 set(cflags -g -std=c++11 -Wall -Werror)
 endif (MSVC)
