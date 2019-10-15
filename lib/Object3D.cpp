@@ -36,16 +36,20 @@ void Object3D::update()
     glm::mat4 r = glm::toMat4(quaternion);
     glm::mat4 s = glm::scale(scale);
 
+    localMatrix = t * r * s;
+
+    decompose();
+
     if (parent != nullptr)
     {
-        matrix = parent->accumulateMatrices() * t * r * s;
+        matrix = parent->accumulateMatrices() * localMatrix;
     }
     else
     {
-        matrix = t * r * s;
+        matrix = localMatrix;
     }
 
-    decompose();
+    globalDecompose();
 
     for (auto& e : children)
     {
@@ -54,7 +58,7 @@ void Object3D::update()
 
 }
 
-void Object3D::decompose()
+void Object3D::globalDecompose()
 {
 
     glm::vec3 skew;
@@ -62,6 +66,15 @@ void Object3D::decompose()
     glm::decompose(matrix, world_scale, world_quaternion, world_position, skew, persp);
     world_rotation = glm::eulerAngles(world_quaternion);
     world_rotation = Util::to_degrees(world_rotation);
+}
+
+void Object3D::decompose()
+{
+    glm::vec3 skew;
+    glm::vec4 persp;
+    glm::decompose(localMatrix, scale, quaternion, position, skew, persp);
+    rotation = glm::eulerAngles(quaternion);
+    rotation = Util::to_degrees(rotation);
 }
 
 glm::mat4 Object3D::getMatrix()

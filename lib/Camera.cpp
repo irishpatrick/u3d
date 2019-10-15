@@ -38,7 +38,12 @@ void Camera::lookAt(Object3D& obj)
 	up = glm::cross(direction, right);
     target = position + direction;
 
-    matrix = glm::lookAt(position, target, up);
+    std::cout << "OLD ";
+    Util::print_vec3(position);
+    //localMatrix = glm::lookAt(position, target, up);
+    //decompose();
+    std::cout << "NEW ";
+    Util::print_vec3(position);
 }
 
 void Camera::lookAt(glm::vec3& v)
@@ -49,7 +54,7 @@ void Camera::lookAt(glm::vec3& v)
 void Camera::update()
 {
     //std::cout << rotation.x << ',' << rotation.y << ',' << rotation.z << std::endl;
-    /*front.x = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y));
+    front.x = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y));
     front.y = sin(glm::radians(rotation.x));
     front.z = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
     front = glm::normalize(front);
@@ -57,7 +62,7 @@ void Camera::update()
     right = glm::normalize(glm::cross(up, front));
     //up = glm::cross(front, right);
 
-    if (parent != nullptr)
+    /*if (parent != nullptr)
     {
         matrix = parent->accumulateMatrices() * glm::lookAt(parent->world_position + position, parent->world_position + position + front, up);
     }
@@ -65,6 +70,9 @@ void Camera::update()
     {
         matrix = glm::lookAt(position, position + front, up);
     }*/
+
+    //matrix = glm::lookAt(position, position + front, up);
+
     matrix = glm::lookAt(position, target, up);
 }
 

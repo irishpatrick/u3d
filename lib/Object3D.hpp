@@ -36,6 +36,7 @@ public:
 
 protected: 
 	glm::mat4 matrix;
+    glm::mat4 localMatrix;
 	std::vector<Object3D*> children;
 	glm::vec3 right;
 	glm::vec3 up;
